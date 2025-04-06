@@ -15,36 +15,6 @@ export default function About({ show, onClose }: { show: boolean; onClose: () =>
         setTimeout(() => onClose(), 500); // allow animation to finish
       };
 
-    // return (
-    //   <div className="absolute top-0 left-0 w-screen h-screen flex z-50">
-    //     {/* Left side */}
-    //     <div className="w-1/2 h-full bg-white opacity-30"></div>
-  
-    //     {/* Right side */}
-    //     <div className="relative w-1/2 h-full bg-[#D8C4B6] px-10 py-20">
-    //       {/* Top Navigation */}
-    //       <div className="absolute top-10 left-20">
-    //         <span className="top">About</span>
-    //       </div>
-    //       <div className="absolute top-10 right-20" onClick={handleClose}>
-    //         <span className="top">X</span>
-    //       </div>
-  
-    //       {/* Footer Info */}
-    //       <div className="absolute bottom-10 left-20">
-    //         <span className="footer opacity-75">Toronto, CA</span>
-    //       </div>
-    //       <div className=" h-full flex flex-col items-stretch gap-10 pt-30">
-    //         <div className="flex-1">
-    //           <ParagraphSlider />
-    //         </div>
-    //         <div className="flex-1">
-    //           <ContactList />
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // );
     return (
       <AnimatePresence>
         {isVisible && (

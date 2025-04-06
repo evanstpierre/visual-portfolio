@@ -3,11 +3,13 @@
 import Image from "next/image";
 import About from "./components/About";
 import { useState } from 'react';
+import Work from "./components/Work";
 
 
 export default function Home() {
 
   const [showAbout, setShowAbout] = useState(false);
+  const [showWork, setShowWork] = useState(false);
 
   return (
     <div className="w-screen h-screen relative overflow-hidden">
@@ -21,9 +23,9 @@ export default function Home() {
 
         {/* Bottom Half */}
         <div className="flex-1 bg-[#3E5879] relative">
-          <div className="absolute bottom-10 left-20"><span className="bottom text-white">Resume</span></div>
-          <div className="absolute bottom-10 right-20"><span className="bottom text-white">Work</span></div>
-        </div>
+          <div className="absolute bottom-10 left-20 hover:underline cursor-pointer transition-all duration-500"><span className="bottom text-white">Resume</span></div>
+          <div className="absolute bottom-10 right-20 hover: cursor-pointer transition-all duration-500" onClick={() => setShowWork(true)}><span className="bottom text-white">Work</span></div>
+        </div>underline
       </div>
 
       {/* Centered Box + Header Wrapper */}
@@ -34,6 +36,7 @@ export default function Home() {
 
       {/* Optional: Overlay component like <About /> if it stays within screen */}
       {showAbout && <About show={showAbout} onClose={() => setShowAbout(false)} />}
+      {showWork && <Work show={showWork} onClose={() => setShowWork(false)} />}
 
     </div>
   );
