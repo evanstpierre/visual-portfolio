@@ -7,6 +7,7 @@
   --color-foreground: var(--foreground);
   --font-italiano: var(--font-italiana);
   --font-aboreto: var(--font-aboreto);
+  --font-libre: var(--font-libre);
 }
 
 body {
@@ -18,6 +19,11 @@ body {
 h1 {
   color: var(--background);
   font-family: var(--font-aboreto);
+}
+h3{
+  font-family: var(--font-libre);
+  color: #213555;
+  font-size: 24px;
 }
 
 span.bottom {
@@ -31,3 +37,24 @@ span.top {
   font-family: var(--font-italiana);
   font-size: 32px;
 }
+span.footer {
+  color: #3E5879;
+  font-family: var(--font-italiana);
+  font-size: 16px;
+}
+
+p.info-text{
+  font-family: var(--font-libre);
+  color: #F5EFE7;
+  font-size:24px;
+}
+
+p.list-text{
+  font-family: var(--font-libre);
+  color: #213555;
+}
+a.list-text{
+  font-family: var(--font-libre);
+  color: #213555;
+}
+

@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
-import { Italiana, Aboreto, } from "next/font/google";
+import { Libre_Baskerville, Italiana, Aboreto, } from "next/font/google";
 import "./globals.css";
 
+const getLibre = Libre_Baskerville({
+  weight: ["400", "700"], // normal and bold
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-libre", // custom CSS variable name
+});
 const getItaliana = Italiana({
   variable: "--font-italiana",
   weight: '400',
@@ -32,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${getItaliana.variable} ${getAboreto.variable} antialiased`}
+        className={`${getItaliana.variable} ${getAboreto.variable} ${getLibre.variable} antialiased`}
       >
         {children}
       </body>

@@ -1,0 +1,13 @@
+{
+    "title": "Contact Information",
+    "contactList":[
+        {
+            "name":"LinkedIn",
+            "link":"https://www.linkedin.com/in/sara-hepperle/"
+        },
+        {
+            "name":"Email",
+            "link":"mailto:sarahepperle@gmail.com"
+        }
+    ]
+}
