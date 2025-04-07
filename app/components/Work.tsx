@@ -41,7 +41,7 @@ export default function Work({ show, onClose }: { show: boolean; onClose: () => 
               <span className="top">Work</span>
             </div>
               {/* Close button */}
-              <div className="absolute top-10 right-10 cursor-pointer" onClick={handleClose}>
+              <div className="absolute top-10 right-10 cursor-pointer wiggle-on-hover" onClick={handleClose}>
                 <span className="top">X</span>
               </div>
   

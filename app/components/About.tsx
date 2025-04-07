@@ -40,12 +40,12 @@ export default function About({ show, onClose }: { show: boolean; onClose: () =>
               <span className="top">About</span>
             </div>
               {/* Close button */}
-              <div className="absolute top-10 right-10 cursor-pointer" onClick={handleClose}>
+              <div className="absolute top-10 right-10 cursor-pointer wiggle-on-hover" onClick={handleClose}>
                 <span className="top">X</span>
               </div>
   
               {/* Main content */}
-              <div className="flex flex-col h-full justify-evenly items-stretch gap-10 mt-[80px]">
+              <div className="flex flex-col h-full justify-evenly items-stretch gap-20 mt-20">
                 <ParagraphSlider />
                 <ContactList />
               </div>
