@@ -52,10 +52,16 @@ p.info-text{
 span.list-text{
   font-family: var(--font-libre);
   color: #213555;
+  font-size: 16px;
 }
 a.list-text{
   font-family: var(--font-libre);
   color: #213555;
+  font-size: 14px;
+}
+
+h3{
+  font-size: 16px;
 }
 
 

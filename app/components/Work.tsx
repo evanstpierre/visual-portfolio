@@ -26,22 +26,22 @@ export default function Work({ show, onClose }: { show: boolean; onClose: () => 
             exit={{ opacity: 0 }}
           >
             {/* Left side */}
-            <div className="w-1/2 h-full bg-white opacity-30" />
+            <div className="w-0 md:w-1/4 lg:w-1/2 h-full bg-white opacity-30" />
   
             {/* Right sliding panel */}
             <motion.div
-              className="relative w-1/2 h-full bg-[#D8C4B6] flex flex-col px-10 py-20"
+              className="relative w-full md:w-3/4 lg:w-1/2 bg-[#D8C4B6] flex flex-col px-10 py-20"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ duration: 0.5, ease: 'easeInOut' }}
             >
               {/* Top Navigation */}
-             <div className="absolute top-10 left-20">
+             <div className="absolute top-10 left-10">
               <span className="top">Work</span>
             </div>
               {/* Close button */}
-              <div className="absolute top-10 right-20 cursor-pointer" onClick={handleClose}>
+              <div className="absolute top-10 right-10 cursor-pointer" onClick={handleClose}>
                 <span className="top">X</span>
               </div>
   
@@ -52,7 +52,7 @@ export default function Work({ show, onClose }: { show: boolean; onClose: () => 
               </div>
   
               {/* Footer */}
-              <div className="absolute bottom-10 left-20">
+              <div className="absolute bottom-10 left-10">
                 <span className="footer opacity-75">Toronto, CA</span>
               </div>
             </motion.div>

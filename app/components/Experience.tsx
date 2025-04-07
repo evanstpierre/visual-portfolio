@@ -13,8 +13,8 @@ export default function Experience() {
     ];
   
     return (
-      <div className="max-w-xl flex flex-col justify-start mx-30 text-[var(--color-foreground)] font-libre">
-        <h3 className="py-4 opacity-75 text-xl font-bold">Work Experience</h3>
+      <div className="max-w-xl flex flex-col justify-start  min-m-10  max-m-30  text-[var(--color-foreground)] font-libre">
+        <h3 className="py-2 opacity-75">Work Experience</h3>
         <div className="w-full h-0.5 bg-[#F5EFE7] opacity-75 mb-2" />
   
         {experienceList.map((item, index) => (
