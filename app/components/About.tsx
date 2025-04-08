@@ -2,7 +2,7 @@
 "use client"
 import ContactList from "./ContactList";
 import ParagraphSlider from "./Paragraph";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 
 
@@ -15,6 +15,19 @@ export default function About({ show, onClose }: { show: boolean; onClose: () =>
         setIsVisible(false);
         setTimeout(() => onClose(), 500); // allow animation to finish
       };
+
+      const handleKeyDown = useCallback((e: KeyboardEvent) => {
+          if (e.key === "Escape")  {
+            handleClose();
+          }
+        }, [handleClose]);
+      
+        useEffect(() => {
+          document.addEventListener("keydown", handleKeyDown);
+          return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+          };
+        }, [handleKeyDown]);
 
     return (
       <AnimatePresence>

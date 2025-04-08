@@ -23,7 +23,7 @@ export default function Home() {
       <div className="absolute inset-0 flex flex-col z-0">
         {/* Top Half */}
         <div className="flex-1 bg-[#F5EFE7] relative">
-          <div className="hidden sm:block absolute top-10 left-10  lg:left-20"  onClick={() => window.location.href = "mailto:sarahepperle@gmail.com"} ><span className="top border-b-1 border-transparent hover:border-[#3E5879] transition-all duration-500 cursor-pointer">Contact</span></div>
+          <div className="hidden sm:block absolute top-10 left-10  lg:left-20"  onClick={() => window.location.href = "mailto:sarahepperle@gmail.com?subject=Lets Connect Sara!"} ><span className="top border-b-1 border-transparent hover:border-[#3E5879] transition-all duration-500 cursor-pointer">Contact</span></div>
           <div className="absolute top-10 right-10  lg:right-20" onClick={() => setShowAbout(true)}><span className="top border-b-1 border-transparent hover:border-[#3E5879] transition-all duration-500 cursor-pointer">About</span></div>
         </div>
 
@@ -42,7 +42,7 @@ export default function Home() {
 
       {/* Optional: Overlay component like <About /> if it stays within screen */}
       {showAbout && <About show={showAbout} onClose={() => setShowAbout(false)} />}
-      {showWork && <Work show={showWork} onClose={() => setShowWork(false)} onGear ={() => setShowSettings(true)}  />}
+      {showWork && <Work show={showWork} settings={showSettings} onClose={() => setShowWork(false)} onGear ={() => setShowSettings(true)}  />}
       {showSettings && <Settings show={showSettings} onClose={() =>setShowSettings(false)} /> }
 
 

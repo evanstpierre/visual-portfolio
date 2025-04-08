@@ -9,14 +9,11 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
     const [isVisible, setIsVisible] = useState(true);
 
     const handleClose = () => {
-        const handleClose = () => {
-            setIsVisible(false);
-            setTimeout(() => onClose(), 1000); // allow animation to finish
-          };
+       onClose();
       };
     return (
         <AnimatePresence>
-          {isVisible && (
+          {show && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

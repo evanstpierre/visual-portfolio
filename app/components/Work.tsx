@@ -1,20 +1,35 @@
 
 "use client"
 import ParagraphSlider from "./Paragraph";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 import Experience from "./Experience";
 import SettingsIcon from '@mui/icons-material/Settings';
 
 
-export default function Work({ show, onClose, onGear, }: { show: boolean; onClose: () => void; onGear: () => void }) {
+export default function Work({ show, settings, onClose, onGear, }: { show: boolean; setting:boolean; onClose: () => void; onGear: () => void }) {
 
       const [isVisible, setIsVisible] = useState(true);
+      
 
       const handleClose = () => {
         setIsVisible(false);
         setTimeout(() => onClose(), 500); // allow animation to finish
       };
+
+      const handleKeyDown = useCallback((e: KeyboardEvent) => {
+        if (e.key === "Escape" && !settings)  {
+          handleClose();
+        }
+      }, [handleClose]);
+    
+      useEffect(() => {
+        document.addEventListener("keydown", handleKeyDown);
+        return () => {
+          document.removeEventListener("keydown", handleKeyDown);
+        };
+      }, [handleKeyDown]);
+    
 
     return (
       <AnimatePresence>
@@ -56,7 +71,7 @@ export default function Work({ show, onClose, onGear, }: { show: boolean; onClos
                 <span className="footer opacity-75">Toronto, CA</span>
               </div>
 
-              <div className="absolute bottom-10 right-10 opacity-75" onClick={onGear}>
+              <div className="absolute bottom-10 right-10 opacity-75  wiggle-on-hover" onClick={onGear}>
                 <SettingsIcon style={{ fontSize: 20, color: '#213555', cursor: 'pointer' }} />
               </div>
             </motion.div>
