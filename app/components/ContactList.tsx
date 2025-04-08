@@ -14,7 +14,7 @@ export default function ContactList(){
 
     return (
         <div className="bg-[#D8C4B6] max-w-xl flex flex-col justify-start min-m-10  max-m-30  text-[var(--color-foreground)] font-libre">
-        <h3 className="py-2 opacity-75">Contact Information</h3>
+        <h3 className="py-4 opacity-75">Contact Information</h3>
         <div className="w-full h-0.5 bg-[#F5EFE7] opacity-75" />
     
         {contactList.map((item, index) => (

@@ -4,9 +4,10 @@ import ParagraphSlider from "./Paragraph";
 import { useState } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 import Experience from "./Experience";
+import SettingsIcon from '@mui/icons-material/Settings';
 
 
-export default function Work({ show, onClose }: { show: boolean; onClose: () => void }) {
+export default function Work({ show, onClose, onGear, }: { show: boolean; onClose: () => void; onGear: () => void }) {
 
       const [isVisible, setIsVisible] = useState(true);
 
@@ -53,6 +54,10 @@ export default function Work({ show, onClose }: { show: boolean; onClose: () => 
               {/* Footer */}
               <div className="absolute bottom-10 left-10">
                 <span className="footer opacity-75">Toronto, CA</span>
+              </div>
+
+              <div className="absolute bottom-10 right-10 opacity-75" onClick={onGear}>
+                <SettingsIcon style={{ fontSize: 20, color: '#213555', cursor: 'pointer' }} />
               </div>
             </motion.div>
           </motion.div>

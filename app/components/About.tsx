@@ -6,6 +6,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 
 
+
 export default function About({ show, onClose }: { show: boolean; onClose: () => void }) {
 
       const [isVisible, setIsVisible] = useState(true);

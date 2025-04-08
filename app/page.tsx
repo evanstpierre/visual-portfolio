@@ -11,6 +11,7 @@ export default function Home() {
 
   const [showAbout, setShowAbout] = useState(false);
   const [showWork, setShowWork] = useState(false);
+  const [showSettings, setShowSettings] = useState(false)
   const handleOpenPDF = () => {
     window.open('/resume.pdf', '_blank');
   };
@@ -41,8 +42,9 @@ export default function Home() {
 
       {/* Optional: Overlay component like <About /> if it stays within screen */}
       {showAbout && <About show={showAbout} onClose={() => setShowAbout(false)} />}
-      {showWork && <Work show={showWork} onClose={() => setShowWork(false)} />}
-      <Settings/>
+      {showWork && <Work show={showWork} onClose={() => setShowWork(false)} onGear ={() => setShowSettings(true)}  />}
+      {showSettings && <Settings show={showSettings} onClose={() =>setShowSettings(false)} /> }
+
 
     </div>
   );
