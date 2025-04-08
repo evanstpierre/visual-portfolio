@@ -73,3 +73,12 @@ h3{
   animation: wiggle 0.3s ease-in-out;
 }
 
+input{
+  font-family: var(--font-libre);
+  color: #213555;
+  font-size: 12px;
+}
+
+.libre{
+  font-family: var(--font-libre);
+}

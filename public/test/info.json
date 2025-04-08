@@ -1,0 +1,55 @@
+{
+    "name": "Sara Hepperle",
+    "footer": "Toronto, Ca",
+    "contact":{
+        "title":"Contact",
+        "href":"mailto:sarahepperle@gmail.com"
+    },
+    "resume":{
+        "title":"Resume",
+        "href":"" 
+    },
+    "about":{
+        "title":"About",
+        "texts":[
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae augue ac arcu convallis varius. Sed at libero eu risus bibendum tincidunt. Curabitur tempus sem id finibus.",
+            "Praesent cursus, odio sed faucibus vulputate, sem ipsum ultricies tellus, vel malesuada tortor libero vitae magna. Fusce accumsan, nisi nec sagittis posuere, eros metus porta nulla.",
+            "Ut ac justo ut erat gravida laoreet. Nunc at magna porta, suscipit sem in, consequat purus. Integer sodales, sapien vitae blandit vehicula, ligula risus efficitur quam."
+            ],
+        "heading": "Contact Information",
+        "contact_list":[
+            {
+                "name":"LinkedIn",
+                "link":"https://www.linkedin.com/in/sara-hepperle/"
+            },
+            {
+                "name":"Email",
+                "link":"mailto:sarahepperle@gmail.com"
+            }
+        ]
+        
+    },
+    "work":{
+        "title":"Work",
+        "texts":[
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae augue ac arcu convallis varius. Sed at libero eu risus bibendum tincidunt. Curabitur tempus sem id finibus.",
+            "Praesent cursus, odio sed faucibus vulputate, sem ipsum ultricies tellus, vel malesuada tortor libero vitae magna. Fusce accumsan, nisi nec sagittis posuere, eros metus porta nulla.",
+            "Ut ac justo ut erat gravida laoreet. Nunc at magna porta, suscipit sem in, consequat purus. Integer sodales, sapien vitae blandit vehicula, ligula risus efficitur quam."
+            ],
+        "heading": "Work Experience",
+        "jobs":[
+            {
+                "name": "Hydro One",
+                "title": "Intern - Communications",
+                "date": "24"
+              },
+              {
+                "name": "City of Toronto",
+                "title": "Swim Instructor",
+                "date": "19/24"
+              }
+           ]
+
+    }
+    
+}

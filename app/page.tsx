@@ -4,6 +4,7 @@ import Image from "next/image";
 import About from "./components/About";
 import { useState } from 'react';
 import Work from "./components/Work";
+import Settings from "./components/Settings";
 
 
 export default function Home() {
@@ -41,6 +42,7 @@ export default function Home() {
       {/* Optional: Overlay component like <About /> if it stays within screen */}
       {showAbout && <About show={showAbout} onClose={() => setShowAbout(false)} />}
       {showWork && <Work show={showWork} onClose={() => setShowWork(false)} />}
+      <Settings/>
 
     </div>
   );

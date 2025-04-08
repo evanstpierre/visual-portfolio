@@ -1,6 +1,5 @@
 
 "use client"
-import ContactList from "./ContactList";
 import ParagraphSlider from "./Paragraph";
 import { useState } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
