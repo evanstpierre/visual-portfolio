@@ -1,16 +1,51 @@
 import ExperienceSection from "./ExperienceTable";
 import Table from "./Table";
 import TextInput from "./TextInput";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Settings({ show, onClose }: { show: boolean; onClose: () => void }){
     const [activeSection, setActiveSection] = useState("about"); // "about" or "work"
     const [isVisible, setIsVisible] = useState(true);
+    const [locked, setLocked] = useState(true);
+    const [isConfirmed, setIsComfirmed] =useState(false)
+    const [isExit, setIsExit] = useState(false)
+
+    
+
 
     const handleClose = () => {
-       onClose();
       };
+
+    const handleLogOut = () =>{
+        if(isConfirmed){
+            onClose();
+        }else{
+            setIsComfirmed(true);
+        }
+
+    }
+    const handleExit = () =>{
+      if(isExit){
+          onClose();
+      }else{
+          setIsExit(true);
+      }
+
+  }
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+          if (e.key === "Escape"){
+            handleExit();
+          }
+        }, [handleExit]);
+        
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleKeyDown]);
+
     return (
         <AnimatePresence>
           {show && (
@@ -36,17 +71,58 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
                 <div className="absolute top-10 left-10">
                   <span className="top">Settings</span>
                 </div>
-    
+                <div className="absolute top-10 right-10 cursor-pointer  wiggle-on-hover "
+                    onClick={()=>setLocked(!locked)}>
+                  <span className="top">{locked? "Edit ": "Confirm"}</span>
+                </div>
+                <div className="absolute bottom-10 left-10 " >
+                         <div className="cursor-pointer wiggle-on-hover  opacity-50 hover:opacity-100 "
+                         onClick={handleLogOut}
+                     >
+                        <motion.span
+                            key={isConfirmed ? "yes" : "logout"}
+                            initial={{ opacity: 0, y: 5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -5 }}
+                            transition={{ duration: 0.25 }}
+                            className="footer block"
+                            >
+                            {isConfirmed ? "Yes, Log Out" : "Log Out"}
+                        </motion.span>
+                         {/* <span className="footer">{isConfirmed? "Yes, Log Out": "Log Out"} </span> */}
+                     </div>
+                
+                </div>
+                <div className="absolute bottom-10 right-10 " >
+                         <div className="cursor-pointer wiggle-on-hover  opacity-50 hover:opacity-100 "
+                         onClick={handleExit}
+                     >
+                        <motion.span
+                            key={isExit? "yes" : "logout"}
+                            initial={{ opacity: 0, y: 5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -5 }}
+                            transition={{ duration: 0.25 }}
+                            className="footer block"
+                            >
+                            {isExit ? "Exit please!" : "Exit"}
+                        </motion.span>
+                         {/* <span className="footer">{isConfirmed? "Yes, Log Out": "Log Out"} </span> */}
+                     </div>
+                
+                </div>
+
                 {/* Inputs */}
                 <div className="flex flex-row w-full flex-wrap gap-x-10 gap-y-7 2xl:w-4/5 mt-10 max-w-5xl ">
-                  <TextInput title="Name" type="text" placeholder="Sara Hepperle" />
-                  <TextInput title="Email" type="text" placeholder="sara@hepperle.com" />
-                  <TextInput title="Footer" type="text" placeholder="Toronto, CA" />
-                  <TextInput title="Resume" type="file" />
-                  <TextInput title="Photo" type="file" />
+                  <TextInput title="Name" type="text" placeholder="Sara Hepperle" locked={locked} />
+                  <TextInput title="Email" type="text" placeholder="sara@hepperle.com" locked={locked}/>
+                  <TextInput title="Footer" type="text" placeholder="Toronto, CA"  locked={locked}/>
+                  <TextInput title="Resume" type="file" locked={locked} />
+                  <TextInput title="Photo" type="file"  locked={locked} />
+                  <TextInput title="Email Header" type="text" placeholder="Lets Connect Sara!"  locked={locked}/>
                 </div>
     
-                <div className="w-full 2xl:w-4/5 h-0.5 opacity-75 bg-[#F5EFE7] max-w-5xl mt-5"></div>
+                <div className="w-full 2xl:w-4/5 h-0.5 opacity-75 bg-[#F5EFE7] max-w-5xl mt-3"></div>
     
                 {/* Section Tabs */}
                 <div className="flex gap-x-10 gap-y-5 cursor-pointer">
@@ -87,7 +163,7 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
                         </div>
                       ))}
                     </div>
-                    <Table />
+                    <Table locked={locked} />
                   </div>
                 )}
     
@@ -106,20 +182,20 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
                           </p>
                         </div>
                       ))}
-                      <ExperienceSection />
+                      <ExperienceSection locked={locked} />
                     </div>
                   </div>
                 )}
     
-                <div className="w-full 2xl:w-4/5 h-0.5 mt-5 opacity-75 bg-[#F5EFE7] max-w-5xl" />
+                <div className="w-full 2xl:w-4/5 h-0.5 mt-3 opacity-75 bg-[#F5EFE7] max-w-5xl" />
     
                 {/* Action Buttons */}
-                <div className="flex flex-row w-full max-w-5xl 2xl:w-4/5 justify-center gap-x-10 gap-y-3 mt-5">
-                  <span className="top border-b-1 border-transparent hover:border-[#3E5879] transition-all duration-500 cursor-pointer">
+                <div className={`flex flex-row w-full max-w-5xl 2xl:w-4/5 justify-center gap-x-10 gap-y-3`}>
+                  <span className={`changes border-b-1 border-transparent transition-all duration-500 ${!locked ? "opacity-50" : "cursor-pointer hover:border-[#3E5879]"}`}>
                     Apply Changes
                   </span>
                   <span
-                    className="top border-b-1 border-transparent hover:border-[#3E5879] transition-all duration-500 cursor-pointer"
+                    className="changes border-b-1 border-transparent hover:border-[#3E5879] transition-all duration-500 cursor-pointer"
                     onClick={handleClose}
                   >
                     Remove Changes

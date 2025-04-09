@@ -42,7 +42,7 @@ export default function Home() {
 
       {/* Optional: Overlay component like <About /> if it stays within screen */}
       {showAbout && <About show={showAbout} onClose={() => setShowAbout(false)} />}
-      {showWork && <Work show={showWork} settings={showSettings} onClose={() => setShowWork(false)} onGear ={() => setShowSettings(true)}  />}
+      {showWork && <Work show={showWork} settings={showSettings} onClose={() => setShowWork(false)} onLogin ={() => setShowSettings(true)}  />}
       {showSettings && <Settings show={showSettings} onClose={() =>setShowSettings(false)} /> }
 
 
