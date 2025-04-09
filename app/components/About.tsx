@@ -10,6 +10,20 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function About({ show, onClose }: { show: boolean; onClose: () => void }) {
 
       const [isVisible, setIsVisible] = useState(true);
+      const [data, setData] = useState(null);
+
+      useEffect(() => {
+        fetch('/api/data')
+          .then(res => res.json())
+          .then(response => {
+            setData(response.data);       // <-- Extract the `data` object
+            console.log(response.data);   // <-- Log full data object
+          })
+          .catch(err => {
+            console.error('Fetch error:', err);
+          });
+      }, []);
+      
 
       const handleClose = () => {
         setIsVisible(false);
@@ -51,7 +65,7 @@ export default function About({ show, onClose }: { show: boolean; onClose: () =>
             >
               {/* Top Navigation */}
              <div className="absolute top-10 left-10">
-              <span className="top">About</span>
+              <span className="top">{data?.about.title}</span>
             </div>
               {/* Close button */}
               <div className="absolute top-10 right-10 cursor-pointer wiggle-on-hover" onClick={handleClose}>
@@ -60,13 +74,17 @@ export default function About({ show, onClose }: { show: boolean; onClose: () =>
   
               {/* Main content */}
               <div className="flex flex-col h-full justify-evenly items-stretch gap-20 mt-20">
-                <ParagraphSlider />
-                <ContactList />
+              {data?.about.texts.length > 0 ? (
+              <ParagraphSlider paragraphs={data?.about.texts} />
+                  ) : (
+                    <p>Loading...</p>)}
+              { data?.about.contact_list.length > 0 ?  <ContactList contact_list={data?.about.contact_list}  heading={data?.about.heading} /> : <div>LOADING...</div>}
+
               </div>
   
               {/* Footer */}
               <div className="absolute bottom-10 left-10">
-                <span className="footer opacity-75">Toronto, CA</span>
+                <span className="footer opacity-75">{data?.footer}</span>
               </div>
             </motion.div>
           </motion.div>

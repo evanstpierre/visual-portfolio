@@ -3,11 +3,13 @@
     "footer": "Toronto, Ca",
     "contact":{
         "title":"Contact",
-        "href":"mailto:sarahepperle@gmail.com"
+        "address":"sarahepperle@gmail.com",
+        "subject":"Lets Connect Sara!"
     },
     "resume":{
         "title":"Resume",
         "href":"" 
+        
     },
     "about":{
         "title":"About",

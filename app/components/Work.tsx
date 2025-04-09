@@ -6,7 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Experience from "./Experience";
 import SettingsIcon from '@mui/icons-material/Settings';
 import LoginIcon from '@mui/icons-material/Login';
-import bcrypt from 'bcryptjs';
+// import { serialize } from 'cookie';
+
 
 
 export default function Work({ show, settings, onClose, onLogin, }: { show: boolean; setting:boolean; onClose: () => void; onLogin: () => void }) {
@@ -14,6 +15,18 @@ export default function Work({ show, settings, onClose, onLogin, }: { show: bool
       const [isVisible, setIsVisible] = useState(true);
       const [isLogin, setIsLogin] = useState(false);
       const [rawPassword, setRawPassword] = useState('');
+      const [data, setData] = useState(null)
+      useEffect(() => {
+        fetch('/api/data')
+          .then(res => res.json())
+          .then(response => {
+            setData(response.data);       // <-- Extract the `data` object
+            console.log(response.data);   // <-- Log full data object
+          })
+          .catch(err => {
+            console.error('Fetch error:', err);
+          });
+      }, []);
       
 
       const handleClose = () => {
@@ -39,15 +52,40 @@ export default function Work({ show, settings, onClose, onLogin, }: { show: bool
       }, [handleKeyDown]);
     
     
-      const handleGear = () =>{
-        // Check if it is logged the admin password
-        setIsLogin(true);
-      //  onGear();
-      }
+      const handleGear = async () => {
+        const token = localStorage.getItem('token'); // or from cookies
+        console.log(token)
+      
+        if (!token) {
+          setIsLogin(true); // no token = prompt login
+          return;
+        }
+      
+        try {
+          const res = await fetch('/api/auth/', {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+      
+          if (res.ok) {
+            const data = await res.json();
+            console.log('User is valid:', data.user);
+            setTimeout(() => setIsLogin(false), 500);
+            onLogin();
+            // Proceed normally (maybe open settings panel, etc.)
+          } else {
+            setIsLogin(true); // token is invalid/expired
+          }
+        } catch (err) {
+          console.error('Error verifying token:', err);
+          setIsLogin(true); // fallback to login prompt
+        }
+      };
+
       const handleLogin = async (e: React.FormEvent) =>{
         e.preventDefault();
-        console.log(rawPassword)
-        console.log(rawPassword.length)
     
         // Do not hash it here
         const res = await fetch('/api/login', {
@@ -57,6 +95,14 @@ export default function Work({ show, settings, onClose, onLogin, }: { show: bool
         });
 
         if (res.ok) {
+          const data = await res.json();
+
+          // 🪪 Save the token to localStorage
+          if (data.token) {
+            localStorage.setItem('token', data.token);
+          }
+
+          setRawPassword('');
           setTimeout(() => setIsLogin(false), 500);
           onLogin();
         } else {
@@ -87,7 +133,7 @@ export default function Work({ show, settings, onClose, onLogin, }: { show: bool
             >
               {/* Top Navigation */}
              <div className="absolute top-10 left-10">
-              <span className="top">Work</span>
+              <span className="top">{data?.work.title}</span>
             </div>
               {/* Close button */}
               <div className="absolute top-10 right-10 cursor-pointer wiggle-on-hover" onClick={handleClose}>
@@ -96,13 +142,17 @@ export default function Work({ show, settings, onClose, onLogin, }: { show: bool
   
               {/* Main content */}
               <div className="flex flex-col h-full justify-evenly items-stretch gap-10 mt-[80px]">
-                <ParagraphSlider />
-                <Experience />
+               {data?.work.texts.length > 0 ? (
+                             <ParagraphSlider paragraphs={data?.work.texts} />
+                                 ) : (
+                                   <p>Loading...</p>)}
+                { data?.work.jobs.length > 0 ?  <Experience    experienceList={data.work.jobs}  heading={data?.work.heading} /> : <div>LOADING...</div>}
+               
               </div>
   
               {/* Footer */}
               <div className="absolute bottom-10 left-10">
-                <span className="footer opacity-75">Toronto, CA</span>
+                <span className="footer opacity-75">{data?.footer}</span>
               </div>
 
               <motion.div

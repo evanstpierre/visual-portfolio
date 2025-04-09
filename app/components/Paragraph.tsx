@@ -14,8 +14,11 @@ const paragraphs = [
   "Praesent cursus, odio sed faucibus vulputate, sem ipsum ultricies tellus, vel malesuada tortor libero vitae magna. Fusce accumsan, nisi nec sagittis posuere, eros metus porta nulla.",
   "Ut ac justo ut erat gravida laoreet. Nunc at magna porta, suscipit sem in, consequat purus. Integer sodales, sapien vitae blandit vehicula, ligula risus efficitur quam.",
 ];
+interface ParagraphSliderProps {
+  paragraphs: string[];
+}
 
-export default function ParagraphSlider() {
+export default function ParagraphSlider({ paragraphs }: ParagraphSliderProps) {
   const [index, setIndex] = useState(0);
 
   // Auto-change every 5 seconds

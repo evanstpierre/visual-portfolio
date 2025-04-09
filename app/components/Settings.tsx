@@ -19,6 +19,7 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
 
     const handleLogOut = () =>{
         if(isConfirmed){
+            localStorage.removeItem('token');
             onClose();
         }else{
             setIsComfirmed(true);
@@ -38,7 +39,7 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
             handleExit();
           }
         }, [handleExit]);
-        
+
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
     return () => {
