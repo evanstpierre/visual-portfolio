@@ -1,28 +1,60 @@
+'use client';
 import ExperienceSection from "./ExperienceTable";
 import Table from "./Table";
 import TextInput from "./TextInput";
 import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ParagraphInput from "./ParagraphInput";
+import { set as setValue, cloneDeep } from 'lodash';
 
 export default function Settings({ show, onClose }: { show: boolean; onClose: () => void }){
     const [activeSection, setActiveSection] = useState("about"); // "about" or "work"
-    const [isVisible, setIsVisible] = useState(true);
     const [locked, setLocked] = useState(true);
     const [isConfirmed, setIsComfirmed] =useState(false)
     const [isExit, setIsExit] = useState(false)
     const [data, setData] = useState(null)
     const [contactList, setContactList] = useState(null);
     const [experience, setExperience] = useState(null);
+    const [workTexts, setWorkTexts] = useState(null)
+    const [aboutTexts, setAboutTexts] = useState(null)
+    
+    const handleDataUpdate = (path: string, value: any) => {
+      setData(prev => {
+        const updated = cloneDeep(prev);
+        setValue(updated, path, value); // lodash `set` modifies deeply nested property
+        return updated;
+      });
+    };
 
+
+
+
+    const handleSetWorkTexts = (newText: string, id: number) => {
+      setWorkTexts(prev =>
+        prev.map(p => (p.id === id ? { ...p, content: newText } : p))
+      );
+    };
+
+    const handleSetAboutTexts = (newText: string, id: number) => {
+      setAboutTexts(prev =>
+        prev.map(p => (p.id === id ? { ...p, content: newText } : p))
+      );
+    };
+  
 
 
     useEffect(() => {
       fetch('/api/data')
         .then(res => res.json())
         .then(response => {
-          setData(response.data);       // <-- Extract the `data` object
-          setContactList(response.data.about.contact_list);
-          setExperience(response.data.work.jobs);
+          const data = response.data;
+
+          setData(data);
+          setContactList(data.about.contact_list);
+          setExperience(data.work.jobs);
+          setWorkTexts(data.work.texts);
+          setAboutTexts(data.about.texts);
+          
         })
         .catch(err => {
           console.error('Fetch error:', err);
@@ -35,15 +67,23 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
     const handleClose = () => {
       };
 
-    const handleLogOut = () =>{
-        if(isConfirmed){
-            localStorage.removeItem('token');
-            onClose();
-        }else{
-            setIsComfirmed(true);
+      const handleLogOut = async () => {
+        if (isConfirmed) {
+          try {
+            await fetch('/api/logout', {
+              method: 'POST',
+              credentials: 'include', // send cookies
+            });
+      
+            // Optionally: clear any local UI state, redirect, etc.
+            onClose(); // close modal or UI
+          } catch (err) {
+            console.error('Logout failed:', err);
+          }
+        } else {
+          setIsComfirmed(true); // prompt user to confirm logout
         }
-
-    }
+      };
     const handleExit = () =>{
       if(isExit){
           onClose();
@@ -53,8 +93,11 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
 
   }
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
-          if (e.key === "Escape"){
+          if (e.key === "Escape" && locked){
             handleExit();
+          }
+          else if (e.key === "Enter" && !locked){
+            setLocked(true)
           }
         }, [handleExit]);
 
@@ -167,40 +210,44 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
                 </div>
     
                 {/* About Section */}
-                {activeSection === "about" && (
-                  <div>
+                {activeSection === "about" && (                    
                     <div className="flex flex-row w-full flex-wrap gap-x-10 gap-y-3 2xl:w-4/5">
-                      {[1, 2, 3].map((i) => (
-                        <div
-                          key={i}
-                          className="relative bg-[#F5EFE7] opacity-75 w-[275px] 2xl:w-[300px] rounded-md"
-                        >
-                          <p className="libre p-5 text-sm">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae
-                            augue ac arcu convallis varius...
-                          </p>
-                        </div>
-                      ))}
-                    </div>
+                    {aboutTexts? (
+                      aboutTexts?.map(({ content, id }) => (
+                        <ParagraphInput
+                          key={id}
+                          id={id}
+                          text={content} // Use `content`, not `text`
+                          setText={handleSetAboutTexts}
+                          locked ={locked}
+                        />
+                      ))
+                    ) : (
+                      ""
+                    )}
+                   
                     {contactList? <Table contactList={contactList} setContactList={setContactList} locked={locked} />: ""}
-                  </div>
+                    </div>
+
                 )}
     
                 {/* Work Section */}
                 {activeSection === "work" && (
                   <div>
                     <div className="flex flex-row w-full flex-wrap gap-x-10 gap-y-3 2xl:w-4/5">
-                      {[1, 2, 3].map((i) => (
-                        <div
-                          key={i}
-                          className="relative bg-[#F5EFE7] opacity-75 w-[275px] 2xl:w-[300px] rounded-md"
-                        >
-                          <p className="libre p-5 text-sm">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae
-                            augue ac arcu convallis varius...
-                          </p>
-                        </div>
-                      ))}
+                    {workTexts? (
+                      workTexts?.map(({ content, id }) => (
+                        <ParagraphInput
+                            key={id}
+                            id={id}
+                            text={content} // Use `content`, not `text`
+                            setText={handleSetWorkTexts}
+                            locked ={locked}
+                          />
+                        ))
+                      ) : (
+                        ""
+                      )}
                       {experience? <ExperienceSection locked={locked} experienceList={experience} setExperienceList={setExperience} />  : ""}
                     </div>
                   </div>

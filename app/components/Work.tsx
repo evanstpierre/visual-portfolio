@@ -64,11 +64,8 @@ export default function Work({ show, settings, onClose, onLogin, }: { show: bool
         try {
           const res = await fetch('/api/auth/', {
             method: 'GET',
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            credentials: 'include', // 🔑 allows cookies to be sent
           });
-      
           if (res.ok) {
             const data = await res.json();
             console.log('User is valid:', data.user);
@@ -83,32 +80,27 @@ export default function Work({ show, settings, onClose, onLogin, }: { show: bool
           setIsLogin(true); // fallback to login prompt
         }
       };
-
-      const handleLogin = async (e: React.FormEvent) =>{
+      const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-    
-        // Do not hash it here
+      
         const res = await fetch('/api/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password: rawPassword }) // send raw password
+          body: JSON.stringify({ password: rawPassword }), // ✅ fixed key
+          credentials: 'include', // ✅ sends HttpOnly cookie
         });
-
+      
         if (res.ok) {
           const data = await res.json();
-
-          // 🪪 Save the token to localStorage
-          if (data.token) {
-            localStorage.setItem('token', data.token);
-          }
-
+          console.log('Login successful:', data);
           setRawPassword('');
           setTimeout(() => setIsLogin(false), 500);
-          onLogin();
+          onLogin(); // ✅ callback to parent
         } else {
           setRawPassword('');
+          console.error('Login failed');
         }
-      }
+      };
 
 
     return (

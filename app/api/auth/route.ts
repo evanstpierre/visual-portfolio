@@ -1,24 +1,25 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { headers } from 'next/headers';
+import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const jwtSecret = process.env.JWT_SECRET;
-
   if (!jwtSecret) {
     return NextResponse.json({ message: 'Missing JWT secret' }, { status: 500 });
   }
 
-  const authHeader = req.headers.get('authorization');
+  const headerList = headers();
+  const cookieHeader = headerList.get('cookie') || '';
+  const tokenMatch = cookieHeader.match(/token=([^;]+)/);
+  const token = tokenMatch?.[1];
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return NextResponse.json({ message: 'No token provided' }, { status: 401 });
+  if (!token) {
+    return NextResponse.json({ message: 'No token found in cookies' }, { status: 401 });
   }
-
-  const token = authHeader.split(' ')[1];
 
   try {
     const decoded = jwt.verify(token, jwtSecret);
-    return NextResponse.json({ user: decoded }, { status: 200 });
+    return NextResponse.json({ user: decoded });
   } catch (err) {
     return NextResponse.json({ message: 'Invalid or expired token' }, { status: 401 });
   }

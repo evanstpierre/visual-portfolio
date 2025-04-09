@@ -9,13 +9,14 @@ import { useEffect, useState } from 'react';
 // ];
 
 // 30 word place holder
-const paragraphs = [
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae augue ac arcu convallis varius. Sed at libero eu risus bibendum tincidunt. Curabitur tempus sem id finibus.",
-  "Praesent cursus, odio sed faucibus vulputate, sem ipsum ultricies tellus, vel malesuada tortor libero vitae magna. Fusce accumsan, nisi nec sagittis posuere, eros metus porta nulla.",
-  "Ut ac justo ut erat gravida laoreet. Nunc at magna porta, suscipit sem in, consequat purus. Integer sodales, sapien vitae blandit vehicula, ligula risus efficitur quam.",
-];
+
+interface ParagraphItem {
+  id: number;
+  content: string;
+}
+
 interface ParagraphSliderProps {
-  paragraphs: string[];
+  paragraphs: ParagraphItem[];
 }
 
 export default function ParagraphSlider({ paragraphs }: ParagraphSliderProps) {
@@ -32,14 +33,14 @@ export default function ParagraphSlider({ paragraphs }: ParagraphSliderProps) {
 
   return (
     <div className="relative max-h-50  max-w-xl min-m-10 max-m-30  flex items-center justify-center text-start">
-      {paragraphs.map((text, i) => (
+      {paragraphs.map((item, i) => (
         <p
-          key={i}
+          key={item.id}
           className={`absolute transition-opacity duration-1000 ease-in-out ${
             i === index ? 'opacity-100' : 'opacity-0'
           }  info-text`}
         >
-          {text}
+          {item.content}
         </p>
       ))}
     </div>
