@@ -15,7 +15,7 @@ export default function ParagraphInput({id,text, setText, locked}:{id:number; te
              className="w-full p-3 focus:outline-none libre text-xs resize-none "
             >   
             </textarea>
-            <span className="absolute bottom-3 right-3 libre"
+            <span className={`absolute bottom-3 right-3 libre ${(text.length > 200)? "text-[#7D0A0A]":"" }`}
             style={{ fontSize: '10px' }}>{200 - text.length}  </span>
         </div>
     );
