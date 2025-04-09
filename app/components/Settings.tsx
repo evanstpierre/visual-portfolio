@@ -10,6 +10,24 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
     const [locked, setLocked] = useState(true);
     const [isConfirmed, setIsComfirmed] =useState(false)
     const [isExit, setIsExit] = useState(false)
+    const [data, setData] = useState(null)
+    const [contactList, setContactList] = useState(null);
+    const [experience, setExperience] = useState(null);
+
+
+
+    useEffect(() => {
+      fetch('/api/data')
+        .then(res => res.json())
+        .then(response => {
+          setData(response.data);       // <-- Extract the `data` object
+          setContactList(response.data.about.contact_list);
+          setExperience(response.data.work.jobs);
+        })
+        .catch(err => {
+          console.error('Fetch error:', err);
+        });
+    }, []);
 
     
 
@@ -115,12 +133,12 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
 
                 {/* Inputs */}
                 <div className="flex flex-row w-full flex-wrap gap-x-10 gap-y-7 2xl:w-4/5 mt-10 max-w-5xl ">
-                  <TextInput title="Name" type="text" placeholder="Sara Hepperle" locked={locked} />
-                  <TextInput title="Email" type="text" placeholder="sara@hepperle.com" locked={locked}/>
-                  <TextInput title="Footer" type="text" placeholder="Toronto, CA"  locked={locked}/>
+                  <TextInput title="Name" type="text" placeholder={data?.name} locked={locked} />
+                  <TextInput title="Email" type="text" placeholder={data?.contact.address}locked={locked}/>
+                  <TextInput title="Footer" type="text" placeholder={data?.footer}  locked={locked}/>
                   <TextInput title="Resume" type="file" locked={locked} />
                   <TextInput title="Photo" type="file"  locked={locked} />
-                  <TextInput title="Email Header" type="text" placeholder="Lets Connect Sara!"  locked={locked}/>
+                  <TextInput title="Email Subject" type="text" placeholder={data?.contact.subject} locked={locked}/>
                 </div>
     
                 <div className="w-full 2xl:w-4/5 h-0.5 opacity-75 bg-[#F5EFE7] max-w-5xl mt-3"></div>
@@ -164,7 +182,7 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
                         </div>
                       ))}
                     </div>
-                    <Table locked={locked} />
+                    {contactList? <Table contactList={contactList} setContactList={setContactList} locked={locked} />: ""}
                   </div>
                 )}
     
@@ -183,7 +201,7 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
                           </p>
                         </div>
                       ))}
-                      <ExperienceSection locked={locked} />
+                      {experience? <ExperienceSection locked={locked} experienceList={experience} setExperienceList={setExperience} />  : ""}
                     </div>
                   </div>
                 )}

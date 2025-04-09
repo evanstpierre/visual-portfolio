@@ -1,31 +1,28 @@
-import { useState } from "react";
-import TextInput from "./TextInput";
 
-export default function Table({locked}:{locked:boolean}){
-    const [contactList, setContactList] = useState([
-        {
-          name: "Email",
-          link: "mailto:sarahepperle@gmail.com"
-        },
-        {
-          name: "LinkedIn",
-          link: "https://www.linkedin.com/in/sara-hepperle/"
-        }
-      ]);
+
+interface ContactItem {
+  name: string;
+  link: string;
+}
+
+interface ContactTableProps {
+  locked: boolean;
+  contactList: ContactItem[];
+  setContactList: (contacts: ContactItem[]) => void;
+}
+
+export default function Table({locked, contactList, setContactList} :ContactTableProps ){
 
 
     const handleAddContact = () => {
-        setContactList([
-        ...contactList,
-        { name: "", link: "" } // Add blank contact
-        ]);
+      setContactList([...contactList, { name: '', link: '' }]);
     };
-    const handleChange = (index, field, value) => {
-        const updated = [...contactList];
-        updated[index][field] = value;
-        setContactList(updated);
-      };
-
+  
+    const handleChange = (index: number, field: keyof ContactItem, value: string) => {
+      const updated = [...contactList];
+      updated[index][field] = value;
+      setContactList(updated);
+    };
     return (
         <div className="max-w-5xl">
         {/* Header Row */}
@@ -34,7 +31,7 @@ export default function Table({locked}:{locked:boolean}){
         <div className="w-[275px] 2xl:w-[300px] libre">Link</div>
       </div>
         {/* Dynamic Rows */}
-        {contactList.map((contact, index) => (
+        {contactList?.map((contact, index) => (
             <div key={index} className="flex flex-row gap-x-10 gap-y-3 mb-3 items-center opacity-75">
             <input
                 type="text"

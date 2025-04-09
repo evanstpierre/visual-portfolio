@@ -1,18 +1,19 @@
 import { useState } from "react";
 
-const ExperienceSection = ({ locked }: { locked: boolean }) => {
-  const [experienceList, setExperienceList] = useState([
-    {
-      name: "Hydro One",
-      title: "Intern - Communications",
-      date: "24",
-    },
-    {
-      name: "City of Toronto",
-      title: "Swim Instructor",
-      date: "19/24",
-    },
-  ]);
+interface ExperienceItem {
+  name: string;
+  title: string;
+  date: string;
+}
+
+interface ExperienceTableProps {
+  locked: boolean;
+  experienceList: ExperienceItem[];
+  setExperienceList: (contacts: ExperienceItem[]) => void;
+}
+
+const ExperienceSection = ({ locked, experienceList, setExperienceList }: ExperienceTableProps) => {
+
 
   const handleAddExperience = () => {
     setExperienceList([

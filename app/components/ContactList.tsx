@@ -22,7 +22,7 @@ export default function ContactList({ heading,contact_list }: ContactListProps){
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="list-text block py-2 ml-2 transition-all duration-300  ease-in-out hover:ml-4 opacity-75 cursor-pointer"
+                className="list-text block py-2 px-2 transition-all duration-300  ease-in-out hover:px-4 opacity-75 cursor-pointer"
             >
                 {item.name}
             </a>
