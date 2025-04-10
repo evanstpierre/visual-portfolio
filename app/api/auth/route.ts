@@ -8,7 +8,7 @@ export async function GET() {
     return NextResponse.json({ message: 'Missing JWT secret' }, { status: 500 });
   }
 
-  const headerList = headers();
+  const headerList = await headers();
   const cookieHeader = headerList.get('cookie') || '';
   const tokenMatch = cookieHeader.match(/token=([^;]+)/);
   const token = tokenMatch?.[1];

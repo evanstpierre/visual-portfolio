@@ -6,6 +6,8 @@ import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ParagraphInput from "./ParagraphInput";
 import { set as setValue, cloneDeep } from 'lodash';
+import DataInput from "./DataInput";
+
 
 export default function Settings({ show, onClose }: { show: boolean; onClose: () => void }){
     const [activeSection, setActiveSection] = useState("about"); // "about" or "work"
@@ -33,12 +35,15 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
       setWorkTexts(prev =>
         prev.map(p => (p.id === id ? { ...p, content: newText } : p))
       );
+      handleDataUpdate("work.texts", workTexts);
     };
 
     const handleSetAboutTexts = (newText: string, id: number) => {
       setAboutTexts(prev =>
         prev.map(p => (p.id === id ? { ...p, content: newText } : p))
+       
       );
+      handleDataUpdate("about.texts",aboutTexts);
     };
   
 
@@ -92,6 +97,20 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
       }
 
   }
+  const handleApply = () => {
+    // modify data 
+    handleDataUpdate("about.contact_list",contactList);
+    handleDataUpdate("about.jobs",experience);
+    fetch('/api/data', {
+      method: 'PUT',
+      credentials: 'include', // send cookies
+      body: JSON.stringify({
+        data
+      }),
+    });
+  }
+
+   
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
           if (e.key === "Escape" && locked){
             handleExit();
@@ -176,12 +195,12 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
 
                 {/* Inputs */}
                 <div className="flex flex-row w-full flex-wrap gap-x-10 gap-y-7 2xl:w-4/5 mt-10 max-w-5xl ">
-                  <TextInput title="Name" type="text" placeholder={data?.name} locked={locked} />
-                  <TextInput title="Email" type="text" placeholder={data?.contact.address}locked={locked}/>
-                  <TextInput title="Footer" type="text" placeholder={data?.footer}  locked={locked}/>
+                  <DataInput title={"Name"} type={"text"} locked={locked} path={"name"} value={data?.name} setValue={handleDataUpdate} />
+                  <DataInput title={"Email"} type={"text"} locked={locked} path={"contact.address"} value={data?.contact.address} setValue={handleDataUpdate} />
+                  <DataInput title={"Email Subject"} type={"text"} locked={locked} path={"contact.subject"} value={data?.contact.subject} setValue={handleDataUpdate} />
+                  <DataInput title={"Footer"} type={"text"} locked={locked} path={"footer"} value={data?.footer} setValue={handleDataUpdate} />
                   <TextInput title="Resume" type="file" locked={locked} />
                   <TextInput title="Photo" type="file"  locked={locked} />
-                  <TextInput title="Email Subject" type="text" placeholder={data?.contact.subject} locked={locked}/>
                 </div>
     
                 <div className="w-full 2xl:w-4/5 h-0.5 opacity-75 bg-[#F5EFE7] max-w-5xl mt-3"></div>
@@ -256,7 +275,7 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
                 <div className="w-full 2xl:w-4/5 h-0.5 mt-3 opacity-75 bg-[#F5EFE7] max-w-5xl" />
     
                 {/* Action Buttons */}
-                <div className={`flex flex-row w-full max-w-5xl 2xl:w-4/5 justify-center gap-x-10 gap-y-3`}>
+                <div className={`flex flex-row w-full max-w-5xl 2xl:w-4/5 justify-center gap-x-10 gap-y-3`} onClick={handleApply}>
                   <span className={`changes border-b-1 border-transparent transition-all duration-500 ${!locked ? "opacity-50" : "cursor-pointer hover:border-[#3E5879]"}`}>
                     Apply Changes
                   </span>

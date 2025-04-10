@@ -17,7 +17,6 @@ export default function About({ show, onClose }: { show: boolean; onClose: () =>
           .then(res => res.json())
           .then(response => {
             setData(response.data);       // <-- Extract the `data` object
-            console.log(response.data);   // <-- Log full data object
           })
           .catch(err => {
             console.error('Fetch error:', err);

@@ -8,8 +8,6 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LoginIcon from '@mui/icons-material/Login';
 // import { serialize } from 'cookie';
 
-
-
 export default function Work({ show, settings, onClose, onLogin, }: { show: boolean; setting:boolean; onClose: () => void; onLogin: () => void }) {
 
       const [isVisible, setIsVisible] = useState(true);
@@ -21,7 +19,7 @@ export default function Work({ show, settings, onClose, onLogin, }: { show: bool
           .then(res => res.json())
           .then(response => {
             setData(response.data);       // <-- Extract the `data` object
-            console.log(response.data);   // <-- Log full data object
+
           })
           .catch(err => {
             console.error('Fetch error:', err);
@@ -54,7 +52,6 @@ export default function Work({ show, settings, onClose, onLogin, }: { show: bool
     
       const handleGear = async () => {
         const token = localStorage.getItem('token'); // or from cookies
-        console.log(token)
       
         if (!token) {
           setIsLogin(true); // no token = prompt login
