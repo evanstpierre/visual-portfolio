@@ -1,10 +1,10 @@
 {
-    "name": "Sara Hepperle",
-    "footer": "Toronto, Ca",
+    "name": "Jane Doe",
+    "footer": "New York, NY",
     "contact":{
         "title":"Contact",
-        "address":"sarahepperle@gmail.com",
-        "subject":"Lets Connect Sara!"
+        "address":"evanlstpierre@gmail.com",
+        "subject":"I couldn’t help but wonder…"
     },
     "resume":{
         "title":"Resume",
@@ -31,11 +31,11 @@
         "contact_list":[
             {
                 "name":"LinkedIn",
-                "link":"https://www.linkedin.com/in/sara-hepperle/"
+                "link":"https://www.linkedin.com/in/evan-st-pierre/"
             },
             {
                 "name":"Email",
-                "link":"mailto:sarahepperle@gmail.com"
+                "link":"mailto:evanlstpierre@gmail.com"
             }
         ]
         
@@ -59,14 +59,14 @@
         "heading": "Work Experience",
         "jobs":[
             {
-                "name": "Hydro One",
-                "title": "Intern - Communications",
-                "date": "24"
+                "name": " Vogue Megazine",
+                "title": "Freelance Writer",
+                "date": "00"
               },
               {
-                "name": "City of Toronto",
-                "title": "Swim Instructor",
-                "date": "19/24"
+                "name": "The New York Star",
+                "title": "Columnist",
+                "date": "98/04"
               }
            ]
 

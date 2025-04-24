@@ -50,7 +50,15 @@ useEffect(() => {
 
       {/* Centered Box + Header Wrapper */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center">
-        <div className="w-[300px] md:w-[375px]  h-[400px] md:h-[500px] bg-white shadow-lg rounded-lg"></div>
+        <div className="w-[300px] md:w-[375px]  h-[400px] md:h-[500px] bg-white shadow-lg rounded-lg">
+            <Image
+            src="/jane-doe-profile-sketch.png"
+            alt={`Profile picture of ${data?.name}`} 
+            width={375}
+            height={500}
+            className="object-contain rounded-lg"
+          />
+        </div>
         <h1 className="mt-[20px] text-4xl md:text-5xl">{data?.name}</h1>
       </div>
 
@@ -58,8 +66,6 @@ useEffect(() => {
       {showAbout && <About show={showAbout} onClose={() => setShowAbout(false)} />}
       {showWork && <Work show={showWork} settings={showSettings} onClose={() => setShowWork(false)} onLogin ={() => setShowSettings(true)}  />}
       {showSettings && <Settings show={showSettings} onClose={() =>setShowSettings(false)} /> }
-
-
     </div>
   );
 }

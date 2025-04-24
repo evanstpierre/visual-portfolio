@@ -21,11 +21,17 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
     const [aboutTexts, setAboutTexts] = useState(null)
     
     const handleDataUpdate = (path: string, value: any) => {
-      setData(prev => {
-        const updated = cloneDeep(prev);
-        setValue(updated, path, value); // lodash `set` modifies deeply nested property
-        return updated;
-      });
+      console.log(path)
+      if(path != "resume"){
+        setData(prev => {
+          const updated = cloneDeep(prev);
+          setValue(updated, path, value); // lodash `set` modifies deeply nested property
+          return updated;
+        });
+      }else{
+        console.log("update resume...")
+      }
+     
     };
 
 
@@ -199,8 +205,16 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
                   <DataInput title={"Email"} type={"text"} locked={locked} path={"contact.address"} value={data?.contact.address} setValue={handleDataUpdate} />
                   <DataInput title={"Email Subject"} type={"text"} locked={locked} path={"contact.subject"} value={data?.contact.subject} setValue={handleDataUpdate} />
                   <DataInput title={"Footer"} type={"text"} locked={locked} path={"footer"} value={data?.footer} setValue={handleDataUpdate} />
-                  <TextInput title="Resume" type="file" locked={locked} />
-                  <TextInput title="Photo" type="file"  locked={locked} />
+                  <div className={`h-[35px] w-[275px] 2xl:w-[300px] bg-[#F5EFE7] rounded-md flex items-center  relative ${locked ? "opacity-50": "opacity-75"}`} >
+                  <span className="absolute bottom-9 left-2 libre text-sm">Resume [PDF]</span>
+                    <input 
+                      disabled={locked}
+                      type={"file"}
+                      accept="application/pdf"
+                      placeholder={"Choose Resume"}
+                      className={`w-full px-2 overflow-hidden text-ellipsis whitespace-nowrap focus:outline-none libre text-md text-[#213555]`}
+                    />
+                  </div>
                 </div>
     
                 <div className="w-full 2xl:w-4/5 h-0.5 opacity-75 bg-[#F5EFE7] max-w-5xl mt-3"></div>

@@ -23,8 +23,8 @@ const getAboreto = Aboreto({
 })
 
 export const metadata: Metadata = {
-  title: "Sara Hepperle",
-  description: "Sara Hepperle's Personal Website",
+  title: "My Website",
+  description: "My Personal Website",
   icons: {
     icon: '/icon/circle_icon.png',
   },
