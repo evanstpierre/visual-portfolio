@@ -159,7 +159,7 @@ export default function Work({ show, settings, onClose, onLogin, }: { show: bool
                        onChange={(e) => setRawPassword(e.target.value)}
                       type="password"
                       placeholder="Password"
-                      className="focus:outline-none flex-1"
+                      className="block w-full overflow-x-hidden focus:outline-none flex-1"
                     />
                     <div className="wiggle-on-hover opacity-75 hover:opacity-100">
                       <LoginIcon

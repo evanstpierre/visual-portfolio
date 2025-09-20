@@ -1,0 +1,31 @@
+{
+    "title":"Work",
+    "texts": [
+    {
+    "id": 1,
+    "content": "Fusce sit amet augue nec sapien hendrerit ullamcorper. Morbi malesuada, elit ut blandit luctus, magna justo sollicitudin velit, a tristique arcu risus at nisi."
+    },
+    {
+    "id": 2,
+    "content": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin eget lorem sit amet velit facilisis placerat in eget risus."
+    },
+    {
+    "id": 3,
+    "content": "Etiam cursus, turpis sit amet dapibus efficitur, justo augue dictum nunc, nec rutrum metus ante non neque. Praesent tincidunt justo nec diam consectetur vulputate."
+    }
+    ],
+    "heading": "Work Experience",
+    "jobs":[
+        {
+            "name": " Vogue Megazine",
+            "title": "Freelance Writer",
+            "date": "00"
+            },
+            {
+            "name": "The New York Star",
+            "title": "Columnist",
+            "date": "98/04"
+            }
+        ]
+
+    }

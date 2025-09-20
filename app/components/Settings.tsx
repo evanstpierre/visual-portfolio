@@ -5,7 +5,8 @@ import TextInput from "./TextInput";
 import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ParagraphInput from "./ParagraphInput";
-import { set as setValue, cloneDeep } from 'lodash';
+import cloneDeep from "lodash/cloneDeep";
+import set from "lodash/set";
 import DataInput from "./DataInput";
 
 
@@ -23,11 +24,11 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
     const handleDataUpdate = (path: string, value: any) => {
       console.log(path)
       if(path != "resume"){
-        setData(prev => {
-          const updated = cloneDeep(prev);
-          setValue(updated, path, value); // lodash `set` modifies deeply nested property
-          return updated;
-        });
+         setData(prev => {
+        const next = cloneDeep(prev);
+        set(next, path, value); // lodash set updates nested path immutably
+        return next;
+  });
       }else{
         console.log("update resume...")
       }
@@ -75,7 +76,22 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
     
 
 
-    const handleClose = () => {
+    const handleRemove = () => {
+       fetch('/api/data')
+        .then(res => res.json())
+        .then(response => {
+          const data = response.data;
+
+          setData(data);
+          setContactList(data.about.contact_list);
+          setExperience(data.work.jobs);
+          setWorkTexts(data.work.texts);
+          setAboutTexts(data.about.texts);
+          
+        })
+        .catch(err => {
+          console.error('Fetch error:', err);
+        });
       };
 
       const handleLogOut = async () => {
@@ -105,13 +121,16 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
   }
   const handleApply = () => {
     // modify data 
-    handleDataUpdate("about.contact_list",contactList);
-    handleDataUpdate("about.jobs",experience);
+    // 1) Compose the next data object *without* relying on async state
+    const nextData = cloneDeep(data);
+    set(nextData, "about.contact_list", contactList);
+    set(nextData, "about.jobs", experience);
+    console.log(nextData)
     fetch('/api/data', {
       method: 'PUT',
       credentials: 'include', // send cookies
       body: JSON.stringify({
-        data
+        nextData
       }),
     });
   }
@@ -295,7 +314,7 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
                   </span>
                   <span
                     className="changes border-b-1 border-transparent hover:border-[#3E5879] transition-all duration-500 cursor-pointer"
-                    onClick={handleClose}
+                    onClick={handleRemove}
                   >
                     Remove Changes
                   </span>
