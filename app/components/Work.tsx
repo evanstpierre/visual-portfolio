@@ -153,13 +153,13 @@ export default function Work({ show, settings, onClose, onLogin, }: { show: bool
                 className="absolute bottom-10 right-10 opacity-75"
               >
                 {isLogin ? (
-                  <div className="flex items-center border rounded px-2 py-1">
+                  <div className="flex items-center border rounded px-2 py-1 overflow-hidden">
                     <input
                       value={rawPassword}
                        onChange={(e) => setRawPassword(e.target.value)}
                       type="password"
                       placeholder="Password"
-                      className="block w-full overflow-x-hidden focus:outline-none flex-1"
+                      className="block w-full overflow-hidden focus:outline-none flex-1"
                     />
                     <div className="wiggle-on-hover opacity-75 hover:opacity-100">
                       <LoginIcon
