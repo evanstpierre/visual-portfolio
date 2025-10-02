@@ -2,14 +2,16 @@ import { headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import info from '@/lib/info.json'; 
+import { connectDB } from '@/lib/mongodb';
 
 
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecret'; // Replace with your secret
 
 
 export async function GET(req: NextRequest) {
-    const data =info;
-    return NextResponse.json({data});
+  await connectDB;
+  const data =info;
+  return NextResponse.json({data});
 }
 
 // PUT handler

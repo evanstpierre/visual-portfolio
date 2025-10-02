@@ -1,39 +1,46 @@
-// lib/mongodb.ts
-import mongoose from "mongoose";
+// /lib/mongoose.ts
+import mongoose, { Mongoose } from "mongoose";
 
-const MONGO_URI =
-  process.env.MONGO_URI || // set in docker-compose (mongodb://mongo:27017/appdb)
-  (process.env.NODE_ENV === "production"
-    ? "mongodb://mongo:27017/appdb" // sensible default in containers
-    : "mongodb://127.0.0.1:27017/appdb"); // local dev outside Docker
+type MongooseCache = {
+  conn: Mongoose | null;
+  promise: Promise<Mongoose> | null;
+};
 
-if (!MONGO_URI) {
-  throw new Error("Please define the MONGO_URI environment variable");
+// Augment Node's global for type safety (dev hot-reload safe)
+declare global {
+  // eslint-disable-next-line no-var
+  var __mongoose: MongooseCache | undefined;
 }
 
-// Reuse connection across HMR in Next dev
-let cached = (global as any)._mongoose;
-if (!cached) cached = (global as any)._mongoose = { conn: null, promise: null };
+const MONGO_URI = process.env.MONGO_URI!;
+if (!MONGO_URI) throw new Error("❌ Missing MONGODB_URI env variable");
+
+const cache: MongooseCache = global.__mongoose ?? { conn: null, promise: null };
 
 export async function connectDB() {
-  if (cached.conn) return cached.conn;
+  if (cache.conn) return cache.conn;
 
-  if (!cached.promise) {
-    cached.promise = mongoose
-      .connect(MONGO_URI, {
-        bufferCommands: false,
-        serverSelectionTimeoutMS: 5000, // fail fast instead of hanging
-        socketTimeoutMS: 10000,
-        maxPoolSize: 10,
-      })
-      .then((m) => m);
+  if (!cache.promise) {
+    cache.promise = mongoose.connect(MONGO_URI, {
+      maxPoolSize: 10,
+      serverSelectionTimeoutMS: 10_000,
+    });
   }
 
   try {
-    cached.conn = await cached.promise;
+    cache.conn = await cache.promise;
+
+    // ✅ Log once on successful connection
+    if (mongoose.connection.readyState === 1) {
+      console.log(`✅ MongoDB connected: ${mongoose.connection.host}/${mongoose.connection.name}`);
+    }
   } catch (err) {
-    cached.promise = null;
+    cache.promise = null; // reset so we can retry next call
+    console.error("❌ MongoDB connection error:", err);
     throw err;
   }
-  return cached.conn;
+
+  // persist across HMR in dev
+  global.__mongoose = cache;
+  return cache.conn;
 }
