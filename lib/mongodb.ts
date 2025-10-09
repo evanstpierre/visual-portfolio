@@ -1,4 +1,5 @@
 // /lib/mongoose.ts
+
 import mongoose, { Mongoose } from "mongoose";
 
 type MongooseCache = {
@@ -11,8 +12,20 @@ declare global {
   // eslint-disable-next-line no-var
   var __mongoose: MongooseCache | undefined;
 }
+const dbName = process.env.MONGO_DB;
+const readUser = process.env.DB_USER;
+const readPass = process.env.DB_PASS;
+const host = "mongo";     // Docker service name or 'localhost' if running locally
+const port = "27017";
+const options = "authSource=myapp"; // optional query parameters
 
-const MONGO_URI = process.env.MONGO_URI!;
+// const MONGO_URI = `mongodb://${readUser}:${readPass}@${host}:${port}/${dbName}?${options}`;
+
+
+const MONGO_URI = `mongodb://user_read:pass@mongo:27017/myapp?authSource=myapp`
+
+console.log("✅ MONGO_URI =", MONGO_URI);
+
 if (!MONGO_URI) throw new Error("❌ Missing MONGODB_URI env variable");
 
 const cache: MongooseCache = global.__mongoose ?? { conn: null, promise: null };

@@ -11,8 +11,12 @@ services:
       WATCHPACK_POLLING: "true"
       HOSTNAME: "0.0.0.0"
       NODE_ENV: "development"
-      # *service name*
-      MONGO_URI: "mongodb://mongo:27017/appdb"
+      DB_USER: ${MONGO_APP_R_USER}
+      DB_PASS: ${MONGO_APP_R_PASS}
+      MONGO_DB: ${MONGO_DB}
+      JWT_SECRET: ${JWT_SECRET}
+
+       
     volumes:
       - .:/app
       - /app/node_modules
@@ -26,32 +30,34 @@ services:
 
 
   mongo:
-      image: mongo:7
-      container_name: mongo
-      restart: always
-      volumes:
-        - mongo_data:/data/db
-        - ./init-scripts:/docker-entrypoint-initdb.d:ro
-      environment:
-       # Root (admin) user that the image creates
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
-
-      # The DB your init.js should seed
-      MONGO_INITDB_DATABASE: ${MONGO_DB}
+    image: mongo:7
+    container_name: mongo
+    restart: always
+    env_file:
+      - .env
+    environment:
+      # Root (admin) user that the image creates
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: admin   # root user in admin
 
       # Pass app creds to your init.js (names are up to you)
-      APP_DB_USER: ${MONGO_USER}
-      APP_DB_PASS: ${MONGO_PASS}
-      healthcheck:
-        # quieter & reliable ping
-        test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
-        interval: 5s
-        timeout: 3s
-        retries: 20
-      expose:
-        - "27017"         
-      networks: [app-net]
+      MONGO_APP_R_USER: ${MONGO_APP_R_USER}
+      MONGO_APP_R_PASS: ${MONGO_APP_R_PASS}
+      MONGO_APP_RW_USER: ${MONGO_APP_RW_USER}
+      MONGO_APP_RW_PASS: ${MONGO_APP_RW_PASS}
+      MONGO_DB: ${MONGO_DB}          # e.g., myapp
+    volumes:
+      - mongo_data:/data/db
+      - ./init-scripts:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    ports:
+      - "27017:27017"
+    networks: [app-net]
 
 volumes:
   mongo_data:

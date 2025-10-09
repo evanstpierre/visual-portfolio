@@ -3,16 +3,31 @@ import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import info from '@/lib/info.json'; 
 import { connectDB } from '@/lib/mongodb';
+import Profile from '@/app/models/Profile';
 
 
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecret'; // Replace with your secret
 
 
 export async function GET(req: NextRequest) {
-  await connectDB;
-  const data =info;
-  return NextResponse.json({data});
+  try {
+    await connectDB();
+    const doc = await Profile.findOne().lean(); // first (and only) seeded doc
+    if (!doc) return NextResponse.json({ error: "No profile found" }, { status: 404 });
+
+    return NextResponse.json({ data: doc }, { status: 200 });
+  } catch (err) {
+    console.error("❌ GET /api/profile error:", err);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  }
 }
+
+// export async function GET(req: NextRequest) {
+//   await connectDB();
+
+//   const data =info;
+//   return NextResponse.json({data});
+// }
 
 // PUT handler
 export async function PUT(req: NextRequest) {

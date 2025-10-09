@@ -1,4 +1,4 @@
-// models/Profile.ts
+// app/models/Profile.ts
 import mongoose, { Schema, Document } from "mongoose";
 
 interface IText { id: number; content: string; }
@@ -8,10 +8,10 @@ interface IJob { name: string; title: string; date: string; }
 export interface IProfile extends Document {
   name: string;
   footer: string;
-  contact: { title: string; address: string; subject: string; };
-  resume: { title: string; href: string; };
-  about: { title: string; texts: IText[]; heading: string; contact_list: IContactList[]; };
-  work: { title: string; texts: IText[]; heading: string; jobs: IJob[]; };
+  contact: { title: string; address: string; subject: string };
+  resume: { title: string; href: string };
+  about: { title: string; texts: IText[]; heading: string; contact_list: IContactList[] };
+  work: { title: string; texts: IText[]; heading: string; jobs: IJob[] };
 }
 
 const TextSchema = new Schema<IText>({
@@ -34,15 +34,8 @@ const ProfileSchema = new Schema<IProfile>(
   {
     name: { type: String, required: true },
     footer: { type: String },
-    contact: {
-      title: { type: String },
-      address: { type: String },
-      subject: { type: String },
-    },
-    resume: {
-      title: { type: String },
-      href: { type: String },
-    },
+    contact: { title: { type: String }, address: { type: String }, subject: { type: String } },
+    resume: { title: { type: String }, href: { type: String } },
     about: {
       title: { type: String },
       texts: [TextSchema],
@@ -59,6 +52,6 @@ const ProfileSchema = new Schema<IProfile>(
   { timestamps: true }
 );
 
-// 👇 third arg sets the exact MongoDB collection name to "info"
+// IMPORTANT: third arg pins the MongoDB collection name to "info" (your seed)
 export default (mongoose.models.Profile as mongoose.Model<IProfile>) ||
   mongoose.model<IProfile>("Profile", ProfileSchema, "info");
