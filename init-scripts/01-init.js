@@ -19,7 +19,7 @@ function ensureUser(user, pwd, role) {
   }
 }
 
-ensureUser(readUser, readPass, "read");
+ensureUser(readUser, readPass, "readWrite");
 ensureUser(writeUser, writePass, "readWrite");
 
 print("🎉 Users created successfully.");

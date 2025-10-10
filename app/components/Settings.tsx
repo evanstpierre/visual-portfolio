@@ -21,37 +21,64 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
     const [workTexts, setWorkTexts] = useState(null)
     const [aboutTexts, setAboutTexts] = useState(null)
     
+    // Keep handleDataUpdate as-is (it immutably sets nested paths)
     const handleDataUpdate = (path: string, value: any) => {
-      console.log(path)
-      if(path != "resume"){
-         setData(prev => {
-        const next = cloneDeep(prev);
-        set(next, path, value); // lodash set updates nested path immutably
+      setData(prev => {
+        const next = cloneDeep(prev ?? {});
+        set(next, path, value);
         return next;
-  });
-      }else{
-        console.log("update resume...")
-      }
-     
+      });
     };
 
-
-
-
+    // When editing an item, compute the next array first, then update both state and data
     const handleSetWorkTexts = (newText: string, id: number) => {
-      setWorkTexts(prev =>
-        prev.map(p => (p.id === id ? { ...p, content: newText } : p))
-      );
-      handleDataUpdate("work.texts", workTexts);
+      setWorkTexts(prev => {
+        const next = (prev ?? []).map(p => (p.id === id ? { ...p, content: newText } : p));
+        handleDataUpdate("work.texts", next);   // use the freshly computed `next`
+        return next;
+      });
     };
 
     const handleSetAboutTexts = (newText: string, id: number) => {
-      setAboutTexts(prev =>
-        prev.map(p => (p.id === id ? { ...p, content: newText } : p))
-       
-      );
-      handleDataUpdate("about.texts",aboutTexts);
+      setAboutTexts(prev => {
+        const next = (prev ?? []).map(p => (p.id === id ? { ...p, content: newText } : p));
+        handleDataUpdate("about.texts", next);
+        return next;
+      });
     };
+
+
+  //   const handleDataUpdate = (path: string, value: any) => {
+  //     console.log(path)
+  //     if(path != "resume"){
+  //        setData(prev => {
+  //       const next = cloneDeep(prev);
+  //       set(next, path, value); // lodash set updates nested path immutably
+  //       return next;
+  // });
+  //     }else{
+  //       console.log("update resume...")
+  //     }
+     
+  //   };
+
+
+
+
+    // const handleSetWorkTexts = (newText: string, id: number) => {
+    //   setWorkTexts(prev =>
+    //     prev.map(p => (p.id === id ? { ...p, content: newText } : p))
+    //   );
+    //   handleDataUpdate("work.texts", workTexts);
+    // };
+
+    // const handleSetAboutTexts = (newText: string, id: number) => {
+    //   setAboutTexts(prev =>
+    //     prev.map(p => (p.id === id ? { ...p, content: newText } : p))
+       
+    //   );
+    //   handleDataUpdate("about.texts",aboutTexts);
+    // };
   
 
 
@@ -119,21 +146,33 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
       }
 
   }
-  const handleApply = () => {
-    // modify data 
-    // 1) Compose the next data object *without* relying on async state
-    const nextData = cloneDeep(data);
-    set(nextData, "about.contact_list", contactList);
-    set(nextData, "about.jobs", experience);
-    console.log(nextData)
-    fetch('/api/data', {
-      method: 'PUT',
-      credentials: 'include', // send cookies
-      body: JSON.stringify({
-        nextData
-      }),
+  // 
+  
+  const handleApply = async () => {
+  // Compose from current state (don’t trust “just set” values)
+  const next = cloneDeep(data ?? {});
+  set(next, "about.contact_list", contactList ?? []);
+  set(next, "work.jobs",       experience ?? []);  // <-- fix: work.jobs, not about.jobs
+  set(next, "work.texts",      workTexts ?? []);
+  set(next, "about.texts",     aboutTexts ?? []);
+
+  try {
+    const res = await fetch("/api/data", {
+      method: "PUT",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(next),  // send the object itself
     });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      console.error("Update failed:", err);
+      return;
+    }
+  } catch (e) {
+    console.error("Network error:", e);
   }
+};
 
    
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -308,8 +347,10 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
                 <div className="w-full 2xl:w-4/5 h-0.5 mt-3 opacity-75 bg-[#F5EFE7] max-w-5xl" />
     
                 {/* Action Buttons */}
-                <div className={`flex flex-row w-full max-w-5xl 2xl:w-4/5 justify-center gap-x-10 gap-y-3`} onClick={handleApply}>
-                  <span className={`changes border-b-1 border-transparent transition-all duration-500 ${!locked ? "opacity-50" : "cursor-pointer hover:border-[#3E5879]"}`}>
+                <div className={`flex flex-row w-full max-w-5xl 2xl:w-4/5 justify-center gap-x-10 gap-y-3`}>
+                  <span className={`changes border-b-1 border-transparent transition-all duration-500 ${!locked ? "opacity-50" : "cursor-pointer hover:border-[#3E5879]"}`}
+                   onClick={handleApply}
+                   >
                     Apply Changes
                   </span>
                   <span
