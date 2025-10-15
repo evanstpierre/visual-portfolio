@@ -1,6 +1,8 @@
 // /lib/mongoose.ts
 
+import { POST } from "@/app/api/login/route";
 import mongoose, { Mongoose } from "mongoose";
+import { PassThrough } from "stream";
 
 type MongooseCache = {
   conn: Mongoose | null;
@@ -12,17 +14,21 @@ declare global {
   // eslint-disable-next-line no-var
   var __mongoose: MongooseCache | undefined;
 }
-const dbName = process.env.MONGO_DB;
-const readUser = process.env.DB_USER;
-const readPass = process.env.DB_PASS;
-const host = "mongo";     // Docker service name or 'localhost' if running locally
-const port = "27017";
-const options = "authSource=myapp"; // optional query parameters
+// const dbName = process.env.MONGO_DB;
+// const readUser = process.env.DB_USER;
+// const readPass = process.env.DB_PASS;
+// const host = "mongo";     // Docker service name or 'localhost' if running locally
+// const port = "27017";
+// const options = "authSource=myapp"; // optional query parameters
 
 // const MONGO_URI = `mongodb://${readUser}:${readPass}@${host}:${port}/${dbName}?${options}`;
 
 
-const MONGO_URI = `mongodb://user_read:pass@mongo:27017/myapp?authSource=myapp`
+
+// const NEW_URI = `mongodb://${USER}:${PASS}@${HOST}:${PORT}/${DB_NAME}?authSource=${DB_NAME}`
+// mongodb://user_read:pass@mongo:27017/myapp?authSource=myappmongodb`
+const MONGO_URI = process.env.MONGO_URI
+
 
 console.log("✅ MONGO_URI =", MONGO_URI);
 

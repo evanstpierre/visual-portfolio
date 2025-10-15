@@ -22,8 +22,6 @@ export async function GET(req: NextRequest) {
   }
 }
 
-
-
 // // PUT handler
 // export async function PUT(req: NextRequest) {
 //     const jwtSecret = process.env.JWT_SECRET;
