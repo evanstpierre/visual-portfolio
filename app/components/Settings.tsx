@@ -20,6 +20,9 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
     const [experience, setExperience] = useState(null);
     const [workTexts, setWorkTexts] = useState(null)
     const [aboutTexts, setAboutTexts] = useState(null)
+
+
+
     
     // Keep handleDataUpdate as-is (it immutably sets nested paths)
     const handleDataUpdate = (path: string, value: any) => {
@@ -349,7 +352,7 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
                 {/* Action Buttons */}
                 <div className={`flex flex-row w-full max-w-5xl 2xl:w-4/5 justify-center gap-x-10 gap-y-3`}>
                   <span className={`changes border-b-1 border-transparent transition-all duration-500 ${!locked ? "opacity-50" : "cursor-pointer hover:border-[#3E5879]"}`}
-                   onClick={handleApply}
+                   onClick={locked? handleApply : undefined}
                    >
                     Apply Changes
                   </span>
