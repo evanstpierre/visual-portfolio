@@ -50,16 +50,16 @@ useEffect(() => {
 
       {/* Centered Box + Header Wrapper */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center">
-        <div className="w-[300px] md:w-[375px]  h-[400px] md:h-[500px] bg-white shadow-lg rounded-lg">
+        <div className="w-[300px] md:w-[325px] lg:w-[350px]  ration[4/3] bg-white shadow-lg rounded-lg">
             <Image
             src="/jane-doe-profile-sketch.png"
             alt={`Profile picture of ${data?.name}`} 
             width={375}
-            height={500}
-            className="object-contain rounded-lg"
+            height={400}
+            className="object-contain rounded-lg "
           />
         </div>
-        <h1 className="mt-[20px] text-4xl md:text-5xl">{data?.name}</h1>
+        <h1 className="justify-center mt-[20px] text-3xl md:text-4xl lg:text-5xl ">{data?.name}</h1>
       </div>
 
       {/* Optional: Overlay component like <About /> if it stays within screen */}

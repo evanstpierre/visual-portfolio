@@ -56,23 +56,23 @@ export default function About({ show, onClose }: { show: boolean; onClose: () =>
   
             {/* Right sliding panel */}
             <motion.div
-              className="relative w-full md:w-3/4 lg:w-1/2 h-full bg-[#D8C4B6] flex flex-col px-10 py-20"
+              className="relative w-full md:w-3/4 lg:w-1/2 bg-[#D8C4B6] flex flex-col px-5 sm:px-10 py-10 sm:py-20"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ duration: 0.5, ease: 'easeInOut' }}
             >
               {/* Top Navigation */}
-             <div className="absolute top-10 left-10">
+             <div className="absolute top-5 sm:top-10 left-5 sm:left-10">
               <span className="top">{data?.about.title}</span>
             </div>
               {/* Close button */}
-              <div className="absolute top-10 right-10 cursor-pointer wiggle-on-hover" onClick={handleClose}>
+              <div className="absolute top-5 sm:top-10 right-5 sm:right-10 cursor-pointer wiggle-on-hover" onClick={handleClose}>
                 <span className="top">X</span>
               </div>
   
               {/* Main content */}
-              <div className="flex flex-col h-full justify-evenly items-stretch gap-20 mt-20">
+              <div className="flex flex-col h-full justify-evenly items-stretch gap-10 sm:gap-20 mt-15 sm:mt-20">
               {data?.about.texts.length > 0 ? (
               <ParagraphSlider paragraphs={data?.about.texts} />
                   ) : (

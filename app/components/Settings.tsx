@@ -261,7 +261,7 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
                 </div>
 
                 {/* Inputs */}
-                <div className="flex flex-row w-full flex-wrap gap-x-10 gap-y-7 2xl:w-4/5 mt-10 max-w-5xl ">
+                <div className="flex flex-row w-full flex-wrap gap-x-10 gap-y-5 2xl:w-4/5 mt-10 ">
                   <DataInput title={"Name"} type={"text"} locked={locked} path={"name"} value={data?.name} setValue={handleDataUpdate} />
                   <DataInput title={"Email"} type={"text"} locked={locked} path={"contact.address"} value={data?.contact.address} setValue={handleDataUpdate} />
                   <DataInput title={"Email Subject"} type={"text"} locked={locked} path={"contact.subject"} value={data?.contact.subject} setValue={handleDataUpdate} />
@@ -278,7 +278,7 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
                   </div>
                 </div>
     
-                <div className="w-full 2xl:w-4/5 h-0.5 opacity-75 bg-[#F5EFE7] max-w-5xl mt-3"></div>
+                <div className="w-full 2xl:w-4/5  h-0.5 opacity-75 bg-[#F5EFE7] mt-3"></div>
     
                 {/* Section Tabs */}
                 <div className="flex gap-x-10 gap-y-5 cursor-pointer">
