@@ -261,7 +261,7 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
                 </div>
 
                 {/* Inputs */}
-                <div className="flex flex-row w-full flex-wrap gap-x-10 gap-y-5 2xl:w-4/5 mt-10 ">
+                <div className="flex flex-row w-full flex-wrap gap-x-10 gap-y-5 2xl:w-9/10 mt-10 ">
                   <DataInput title={"Name"} type={"text"} locked={locked} path={"name"} value={data?.name} setValue={handleDataUpdate} />
                   <DataInput title={"Email"} type={"text"} locked={locked} path={"contact.address"} value={data?.contact.address} setValue={handleDataUpdate} />
                   <DataInput title={"Email Subject"} type={"text"} locked={locked} path={"contact.subject"} value={data?.contact.subject} setValue={handleDataUpdate} />
@@ -278,7 +278,7 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
                   </div>
                 </div>
     
-                <div className="w-full 2xl:w-4/5  h-0.5 opacity-75 bg-[#F5EFE7] mt-3"></div>
+                <div className="w-full 2xl:w-9/10  h-0.5 opacity-75 bg-[#F5EFE7] mt-3"></div>
     
                 {/* Section Tabs */}
                 <div className="flex gap-x-10 gap-y-5 cursor-pointer">
@@ -305,7 +305,7 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
     
                 {/* About Section */}
                 {activeSection === "about" && (                    
-                    <div className="flex flex-row w-full flex-wrap gap-x-10 gap-y-3 2xl:w-4/5">
+                    <div className="flex flex-row w-full flex-wrap gap-x-10 gap-y-3 2xl:w-9/10">
                     {aboutTexts? (
                       aboutTexts?.map(({ content, id }) => (
                         <ParagraphInput
@@ -328,7 +328,7 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
                 {/* Work Section */}
                 {activeSection === "work" && (
                   <div>
-                    <div className="flex flex-row w-full flex-wrap gap-x-10 gap-y-3 2xl:w-4/5">
+                    <div className="flex flex-row w-full flex-wrap gap-x-10 gap-y-3 2xl:w-9/10">
                     {workTexts? (
                       workTexts?.map(({ content, id }) => (
                         <ParagraphInput
@@ -347,10 +347,10 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
                   </div>
                 )}
     
-                <div className="w-full 2xl:w-4/5 h-0.5 mt-3 opacity-75 bg-[#F5EFE7] max-w-5xl" />
+                <div className="w-full 2xl:w-9/10 h-0.5 mt-3 opacity-75 bg-[#F5EFE7] " />
     
                 {/* Action Buttons */}
-                <div className={`flex flex-row w-full max-w-5xl 2xl:w-4/5 justify-center gap-x-10 gap-y-3`}>
+                <div className={`flex flex-row w-full 2xl:w-9/10 justify-center gap-x-10 gap-y-3`}>
                   <span className={`changes border-b-1 border-transparent transition-all duration-500 ${!locked ? "opacity-50" : "cursor-pointer hover:border-[#3E5879]"}`}
                    onClick={locked? handleApply : undefined}
                    >
