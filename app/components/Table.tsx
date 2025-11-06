@@ -12,12 +12,14 @@ interface ContactTableProps {
 }
 
 export default function Table({locked, contactList, setContactList} :ContactTableProps ){
-
-
     const handleAddContact = () => {
       setContactList([...contactList, { name: '', link: '' }]);
     };
-  
+    const handleRemoveContact = (index: number) => {
+      const updated = contactList.filter((_, i) => i !== index);
+      setContactList(updated);
+    };
+      
     const handleChange = (index: number, field: keyof ContactItem, value: string) => {
       const updated = [...contactList];
       updated[index][field] = value;
@@ -26,10 +28,20 @@ export default function Table({locked, contactList, setContactList} :ContactTabl
     return (
         <div className="max-w-5xl">
         {/* Header Row */}
-        <div className="flex flex-row gap-x-10 mb-2 mt-2">
-        <div className="w-[275px] 2xl:w-[300px] libre">Name</div>
-        <div className="w-[275px] 2xl:w-[300px] libre">Link</div>
-      </div>
+        <div className="flex flex-row items-center gap-x-10 mb-2 mt-2">
+          <div className="w-[275px] 2xl:w-[300px] libre">Name</div>
+          <div className="w-[275px] 2xl:w-[300px] libre">Link</div>
+
+          {!locked && (
+            <button
+              onClick={handleAddContact}
+              className="flex items-center justify-center text-[32px] cursor-pointer transition-transform hover:scale-110"
+              aria-label="Add Contact"
+            >
+              <span className="libre leading-none">+</span>
+            </button>
+          )}
+        </div>
         {/* Dynamic Rows */}
         {contactList?.map((contact, index) => (
             <div key={index} className="flex flex-row gap-x-10 gap-y-3 mb-3 items-center opacity-75">
@@ -50,16 +62,18 @@ export default function Table({locked, contactList, setContactList} :ContactTabl
                 placeholder="Link"
             />
 
-            {index === contactList.length - 1 && !locked && (
+            {!locked && (
                 <div
-                onClick={handleAddContact}
+                onClick={() => handleRemoveContact(index)}
                 className="h-[40px] flex items-center wiggle-on-hover cursor-pointer"
                 >
-                <span className="libre text-[40px]">+</span>
+                <span className="libre text-[25px]">x</span>
                 </div>
             )}
             </div>
+            
         ))}
+
         </div>
     );
     }

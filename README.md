@@ -1,4 +1,4 @@
-# Customiziable personal website. 
+# Customizable personal website. 
 
 Visualization of Work Experience, About and Contact Page with admin portal and database to enable real time updates.
 

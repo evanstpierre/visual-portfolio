@@ -21,6 +21,10 @@ const ExperienceSection = ({ locked, experienceList, setExperienceList }: Experi
       { name: "", title: "", date: "" },
     ]);
   };
+  const handleRemoveExperience = (index: number) => {
+    const updated = experienceList.filter((_, i) => i !== index);
+    setExperienceList(updated);
+  };
 
   const handleChange = (index: number, field: string, value: string) => {
     const updated = [...experienceList];
@@ -31,10 +35,19 @@ const ExperienceSection = ({ locked, experienceList, setExperienceList }: Experi
   return (
     <div className="max-w-5xl">
       {/* Header Row */}
-      <div className="flex flex-row gap-x-10 mb-2 mt-2">
+      <div className="flex flex-row items-center gap-x-10 mb-2 mt-2">
         <div className="w-[275px] 2xl:w-[300px] libre">Name</div>
         <div className="w-[275px] 2xl:w-[300px] libre">Title</div>
-        <div className="w-[275px] 2xl:w-[300px] libre">Date</div>
+        <div className="w-[150px]  libre">Date</div>
+                  {!locked && (
+            <button
+              onClick={handleAddExperience}
+              className="flex items-center justify-center text-[32px] cursor-pointer transition-transform hover:scale-110"
+              aria-label="Add Contact"
+            >
+              <span className="libre leading-none">+</span>
+            </button>
+          )}
       </div>
 
       {/* Dynamic Rows */}
@@ -73,15 +86,14 @@ const ExperienceSection = ({ locked, experienceList, setExperienceList }: Experi
             }`}
             placeholder="Date"
           />
-
-          {index === experienceList.length - 1 && !locked && (
-            <div
-              onClick={handleAddExperience}
-              className="h-[40px] flex items-center wiggle-on-hover cursor-pointer"
-            >
-              <span className="libre text-[40px]">+</span>
-            </div>
-          )}
+            {!locked && (
+                <div
+                onClick={() => handleRemoveExperience(index)}
+                className="h-[40px] flex items-center wiggle-on-hover cursor-pointer"
+                >
+                <span className="libre text-[25px]">x</span>
+                </div>
+            )}
         </div>
       ))}
     </div>
