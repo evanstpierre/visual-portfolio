@@ -7,7 +7,7 @@ Visualization of Work Experience, About and Contact Page with admin portal and d
 To run the devlopment Server
 
 ```bash
-docker compose up -d --build
+docker compose --profile dev up -d --build
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
