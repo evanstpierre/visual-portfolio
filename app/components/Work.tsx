@@ -89,7 +89,7 @@ export default function Work({ show, settings, onClose, onLogin, }: { show: bool
       
         if (res.ok) {
           const data = await res.json();
-          console.log('Login successful:', data);
+          // console.log('Login successful:', data);
           setRawPassword('');
           setTimeout(() => setIsLogin(false), 500);
           onLogin(); // ✅ callback to parent

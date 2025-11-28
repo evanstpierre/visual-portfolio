@@ -50,41 +50,6 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
       });
     };
 
-
-  //   const handleDataUpdate = (path: string, value: any) => {
-  //     console.log(path)
-  //     if(path != "resume"){
-  //        setData(prev => {
-  //       const next = cloneDeep(prev);
-  //       set(next, path, value); // lodash set updates nested path immutably
-  //       return next;
-  // });
-  //     }else{
-  //       console.log("update resume...")
-  //     }
-     
-  //   };
-
-
-
-
-    // const handleSetWorkTexts = (newText: string, id: number) => {
-    //   setWorkTexts(prev =>
-    //     prev.map(p => (p.id === id ? { ...p, content: newText } : p))
-    //   );
-    //   handleDataUpdate("work.texts", workTexts);
-    // };
-
-    // const handleSetAboutTexts = (newText: string, id: number) => {
-    //   setAboutTexts(prev =>
-    //     prev.map(p => (p.id === id ? { ...p, content: newText } : p))
-       
-    //   );
-    //   handleDataUpdate("about.texts",aboutTexts);
-    // };
-  
-
-
     useEffect(() => {
       fetch('/api/data')
         .then(res => res.json())
