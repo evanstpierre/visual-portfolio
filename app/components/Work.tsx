@@ -65,7 +65,7 @@ export default function Work({ show, settings, onClose, onLogin, }: { show: bool
           });
           if (res.ok) {
             const data = await res.json();
-            console.log('User is valid:', data.user);
+            // console.log('User is valid:', data.user);
             setTimeout(() => setIsLogin(false), 500);
             onLogin();
             // Proceed normally (maybe open settings panel, etc.)

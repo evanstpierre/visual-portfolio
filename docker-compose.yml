@@ -1,31 +1,30 @@
+version: "3.9"
+
 services:
-  next:
+  next-prod:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: next-dev
-    ports:
-      - "3000:3000"
+    container_name: next-prod
     environment:
-      CHOKIDAR_USEPOLLING: "true"
-      WATCHPACK_POLLING: "true"
       HOSTNAME: "0.0.0.0"
-      NODE_ENV: "development"
+      NODE_ENV: "production"
+      PORT: "3000"
       MONGO_URI: ${MONGO_URI}
       JWT_SECRET: ${JWT_SECRET}
-
-       
-    volumes:
-      - .:/app
-      - /app/node_modules
+    # In prod you usually don't mount the source; run the built image
+    # volumes:
+    #   - .:/app
+    #   - /app/node_modules
     depends_on:
       mongo:
         condition: service_healthy
     restart: always
-    networks: [app-net]
-    command: ["npm", "run", "dev"]
-  
-
+    networks:
+      - app-net
+    expose:
+      - "3000"
+    command: ["npm", "run", "start"]
 
   mongo:
     image: mongo:7
@@ -34,17 +33,15 @@ services:
     env_file:
       - .env
     environment:
-      # Root (admin) user that the image creates
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
-      MONGO_INITDB_DATABASE: admin   # root user in admin
+      MONGO_INITDB_DATABASE: admin
 
-      # Pass app creds to your init.js (names are up to you)
       MONGO_APP_R_USER: ${MONGO_APP_R_USER}
       MONGO_APP_R_PASS: ${MONGO_APP_R_PASS}
       MONGO_APP_RW_USER: ${MONGO_APP_RW_USER}
       MONGO_APP_RW_PASS: ${MONGO_APP_RW_PASS}
-      MONGO_DB: ${MONGO_DB}          # e.g., myapp
+      MONGO_DB: ${MONGO_DB}
     volumes:
       - mongo_data:/data/db
       - ./init-scripts:/docker-entrypoint-initdb.d:ro
@@ -53,9 +50,24 @@ services:
       interval: 5s
       timeout: 3s
       retries: 20
+    # You *can* omit this port in prod if you never connect from host.
     ports:
       - "27017:27017"
-    networks: [app-net]
+    networks:
+      - app-net
+
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    depends_on:
+      - next-prod
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    command: >
+      tunnel --no-autoupdate run --token ${TUNNEL_TOKEN}
+    restart: always
+    networks:
+      - app-net
 
 volumes:
   mongo_data:
