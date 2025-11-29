@@ -39,7 +39,7 @@ db.info.updateOne(
         texts: [
           { id: 1, content: "Experience supporting governance and business operations by improving processes, organizing information, and helping teams maintain consistency and compliance." },
           { id: 2, content: "Strong background in communication and stakeholder engagement, creating clear messaging, coordinating initiatives, and building positive relationships across teams." },
-          { id: 3, content: "Strong background in communication and stakeholder engagement, creating clear messaging, coordinating initiatives, and building positive relationships across teams.Strong background in communication and stakeholder engagement, creating clear messaging, coordinating initiatives, and building positive relationships across teams." }
+          { id: 3, content: "Strong background in communication and stakeholder engagement, creating clear messaging, coordinating initiatives, and building positive relationships across teams." }
         ],
         heading: "Work Experience",
         jobs: [
