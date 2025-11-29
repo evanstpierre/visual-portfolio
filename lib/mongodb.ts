@@ -30,6 +30,8 @@ declare global {
 const MONGO_URI = process.env.MONGO_URI
 
 
+console.log("✅ MONGO_URI =", MONGO_URI);
+
 if (!MONGO_URI) throw new Error("❌ Missing MONGODB_URI env variable");
 
 const cache: MongooseCache = global.__mongoose ?? { conn: null, promise: null };

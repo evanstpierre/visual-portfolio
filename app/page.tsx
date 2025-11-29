@@ -52,7 +52,7 @@ useEffect(() => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center">
         <div className="w-[300px] md:w-[325px] lg:w-[350px]  ration[4/3] bg-white shadow-lg rounded-lg">
             <Image
-            src="/jane-doe-profile-sketch.png"
+            src="/sara-profile.jpeg"
             alt={`Profile picture of ${data?.name}`} 
             width={375}
             height={400}

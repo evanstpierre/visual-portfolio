@@ -13,12 +13,12 @@ db.info.updateOne(
   {
     $set: {
       _seedKey: "profile_v1",
-      name: "Carrie Bradshaw",
-      footer: "New York, NY",
+      name: "Sara Hepperle",
+      footer: "Toronto, CA",
       contact: {
         title: "Contact",
-        address: "evanlstpierre@gmail.com",
-        subject: "I couldn’t help but wonder…",
+        address: "sarahepperle@gmail.com",
+        subject: "Lets Connect! From sarahepperle.com",
       },
       resume: { title: "Resume", href: "" },
       about: {
@@ -30,8 +30,8 @@ db.info.updateOne(
         ],
         heading: "Contact Information",
         contact_list: [
-          { name: "LinkedIn", link: "https://www.linkedin.com/in/evan-st-pierre/" },
-          { name: "Email", link: "mailto:evanlstpierre@gmail.com" }
+          { name: "LinkedIn", link: "https://www.linkedin.com/in/sara-hepperle/" },
+          { name: "Email", link: "mailto:sarahepperle@gmail.com" }
         ],
       },
       work: {
@@ -43,8 +43,9 @@ db.info.updateOne(
         ],
         heading: "Work Experience",
         jobs: [
-          { name: "Vogue Magazine", title: "Freelance Writer", date: "00" },
-          { name: "The New York Star", title: "Columnist", date: "98/04" }
+          { name: "CIBC", title: "Governance Anaylist", date: "25" },
+          { name: "HydroOne", title: "Internal Coms. Intern", date: "24" },
+          { name: "City of Toronto", title: "Pool Manager", date: "22/25" }
         ],
       },
     },
