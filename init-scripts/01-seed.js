@@ -24,9 +24,9 @@ db.info.updateOne(
       about: {
         title: "About",
         texts: [
-          { id: 1, content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae augue ac arcu convallis varius. Sed at libero eu risus bibendum tincidunt. Curabitur tempus sem id finibus." },
-          { id: 2, content: "Praesent cursus, odio sed faucibus vulputate, sem ipsum ultricies tellus, vel malesuada tortor libero vitae magna. Fusce accumsan, nisi nec sagittis posuere, eros metus porta nulla." },
-          { id: 3, content: "Ut ac justo ut erat gravida laoreet. Nunc at magna porta, suscipit sem in, consequat purus. Integer sodales, sapien vitae blandit vehicula, ligula risus efficitur quam." }
+          { id: 1, content: "I’m in my final term of the BCom Co-op program at Toronto Metropolitan University. I’ve been active in student leadership and serve as a corporate relations associate for the Women in Law Society." },
+          { id: 2, content: "In Winter 2025, I completed an academic exchange at Copenhagen Business School in Denmark and received the International Exchange Student Scholarship for my academic performance. I loved travelling Europe and experience different cultures." },
+          { id: 3, content: "Outside of school, I love discovering new neighbourhoods and searching for the best bakeries in Toronto. I’m a passionate baker—especially sourdough, cookies, pies, and cakes. When I’m not baking, you’ll probably find me at the beach with Nelson (my dog) and an iced matcha latte." }
         ],
         heading: "Contact Information",
         contact_list: [
@@ -37,9 +37,9 @@ db.info.updateOne(
       work: {
         title: "Work",
         texts: [
-          { id: 1, content: "Fusce sit amet augue nec sapien hendrerit ullamcorper. Morbi malesuada, elit ut blandit luctus, magna justo sollicitudin velit, a tristique arcu risus at nisi." },
-          { id: 2, content: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin eget lorem sit amet velit facilisis placerat in eget risus." },
-          { id: 3, content: "Etiam cursus, turpis sit amet dapibus efficitur, justo augue dictum nunc, nec rutrum metus ante non neque. Praesent tincidunt justo nec diam consectetur vulputate." }
+          { id: 1, content: "Experience supporting governance and business operations by improving processes, organizing information, and helping teams maintain consistency and compliance." },
+          { id: 2, content: "Strong background in communication and stakeholder engagement, creating clear messaging, coordinating initiatives, and building positive relationships across teams." },
+          { id: 3, content: "Strong background in communication and stakeholder engagement, creating clear messaging, coordinating initiatives, and building positive relationships across teams.Strong background in communication and stakeholder engagement, creating clear messaging, coordinating initiatives, and building positive relationships across teams." }
         ],
         heading: "Work Experience",
         jobs: [
@@ -53,4 +53,4 @@ db.info.updateOne(
   { upsert: true }
 );
 
-print("✅ Seeded/updated info collection.");
+// print("✅ Seeded/updated info collection.");

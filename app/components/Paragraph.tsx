@@ -21,7 +21,7 @@ export default function ParagraphSlider({ paragraphs }: ParagraphSliderProps) {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % paragraphs.length);
-    }, 5000);
+    }, 8000);
 
     return () => clearInterval(interval);
   }, []);
