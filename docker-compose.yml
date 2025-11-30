@@ -6,6 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: dev        # 👈 use the dev stage
     container_name: next-dev
     environment:
       CHOKIDAR_USEPOLLING: "true"
@@ -25,6 +26,8 @@ services:
     restart: always
     networks:
       - app-net
+    # CMD in Dockerfile dev stage is already `npm run dev`,
+    # so you *could* drop this line, but it's fine to keep:
     command: ["npm", "run", "dev"]
 
 
@@ -33,6 +36,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: prod       # 👈 use the prod stage
     container_name: next-prod
     environment:
       HOSTNAME: "0.0.0.0"
@@ -48,6 +52,9 @@ services:
       - app-net
     expose:
       - "3000"
+    # optional: for local testing without tunnel, you can add:
+    # ports:
+    #   - "3000:3000"
     command: ["npm", "run", "start"]
 
 
