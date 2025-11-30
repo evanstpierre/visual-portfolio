@@ -167,7 +167,7 @@ export default function Settings({ show, onClose }: { show: boolean; onClose: ()
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="absolute top-0 left-0 w-screen h-screen z-50 flex overflow-hidden"
+              className="absolute top-0 left-0 w-screen h-[100dvh] z-50 flex overflow-hidden"
             >
               {/* Side dim */}
               <div className="w-0 xl:w-1/6 2xl:w-1/5 h-full bg-white opacity-30" />

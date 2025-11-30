@@ -32,7 +32,7 @@ useEffect(() => {
 
 
   return (
-    <div className="w-screen h-screen relative overflow-hidden">
+    <div className="w-screen h-[100dvh] relative overflow-hidden">
       {/* Background layout (Top and Bottom Halves) */}
       <div className="absolute inset-0 flex flex-col z-0">
         {/* Top Half */}
@@ -53,7 +53,7 @@ useEffect(() => {
         <div className="w-[300px] md:w-[325px] lg:w-[350px]  ration[4/3] bg-white shadow-lg rounded-lg">
             <Image
             src="/sara-profile.jpeg"
-            alt={`Profile picture of ${data?.name}`} 
+            alt={data? `Profile picture of ${data?.name}` : ''} 
             width={375}
             height={400}
             className="object-contain rounded-lg "

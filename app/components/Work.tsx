@@ -104,7 +104,7 @@ export default function Work({ show, settings, onClose, onLogin, }: { show: bool
       <AnimatePresence>
         {isVisible && (
           <motion.div
-            className="absolute top-0 left-0 w-screen h-screen z-50 flex overflow-hidden"
+            className="absolute top-0 left-0 w-screen h-[100dvh] z-50 flex overflow-hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
