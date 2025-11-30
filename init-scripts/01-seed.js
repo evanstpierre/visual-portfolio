@@ -24,9 +24,9 @@ db.info.updateOne(
       about: {
         title: "About",
         texts: [
-          { id: 1, content: "’m in my final term of the Bachelor of Commerce Co-op program at Toronto Metropolitan University. I’ve been active in student leadership with the TMU Women in Law Society and developed an interest in law and ethics." },
+          { id: 1, content: "I’m in my final term of the Bachelor of Commerce Co-op program at Toronto Metropolitan University. I’ve been active in student leadership with the TMU Women in Law Society and developed an interest in law and ethics." },
           { id: 2, content: "In Winter 2025, I completed an exchange at Copenhagen Business School and received the International Exchange Student Scholarship. I loved traveling Europe and experiencing different cultures." },
-          { id: 3, content: "Outside school, I love exploring new neighbourhoods and finding Toronto’s best bakeries. I’m a passionate baker, and when I’m not baking, I’m usually at the beach with Nelson (my dog) and a matcha latte." }
+          { id: 3, content: "Outside school, I love exploring new neighbourhoods and finding Toronto’s best bakeries. I’m a passionate baker, I love going to the the beach with Nelson (my dog) and a matcha latte." }
         ],
         heading: "Contact Information",
         contact_list: [
