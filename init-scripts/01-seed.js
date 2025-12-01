@@ -44,7 +44,7 @@ db.info.updateOne(
         heading: "Work Experience",
         jobs: [
           { name: "CIBC", title: "Governance Anaylist", date: "25" },
-          { name: "Hydro One", title: "Internal Coms. Intern", date: "24" },
+          { name: "Hydro One", title: "Internal Comms. Intern", date: "24" },
           { name: "City of Toronto", title: "Pool Manager", date: "22-25" }
         ],
       },
