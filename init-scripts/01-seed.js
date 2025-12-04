@@ -13,38 +13,39 @@ db.info.updateOne(
   {
     $set: {
       _seedKey: "profile_v1",
-      name: "Carrie Bradshaw",
-      footer: "New York, NY",
+      name: "Sara Hepperle",
+      footer: "Toronto, CA",
       contact: {
         title: "Contact",
-        address: "evanlstpierre@gmail.com",
-        subject: "I couldn’t help but wonder…",
+        address: "sarahepperle@gmail.com",
+        subject: "Lets Connect! From sarahepperle.com",
       },
       resume: { title: "Resume", href: "" },
       about: {
         title: "About",
         texts: [
-          { id: 1, content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae augue ac arcu convallis varius. Sed at libero eu risus bibendum tincidunt. Curabitur tempus sem id finibus." },
-          { id: 2, content: "Praesent cursus, odio sed faucibus vulputate, sem ipsum ultricies tellus, vel malesuada tortor libero vitae magna. Fusce accumsan, nisi nec sagittis posuere, eros metus porta nulla." },
-          { id: 3, content: "Ut ac justo ut erat gravida laoreet. Nunc at magna porta, suscipit sem in, consequat purus. Integer sodales, sapien vitae blandit vehicula, ligula risus efficitur quam." }
+          { id: 1, content: "I’m in my final term of the Bachelor of Commerce Co-op program at Toronto Metropolitan University. I’ve been active in student leadership with the TMU Women in Law Society and developed an interest in law and ethics." },
+          { id: 2, content: "In Winter 2025, I completed an exchange at Copenhagen Business School and received the International Exchange Student Scholarship. I loved traveling Europe and experiencing different cultures." },
+          { id: 3, content: "Outside school, I love exploring new neighbourhoods and finding Toronto’s best bakeries. I’m a passionate baker, I love going to the the beach with Nelson (my dog) and a matcha latte." }
         ],
         heading: "Contact Information",
         contact_list: [
-          { name: "LinkedIn", link: "https://www.linkedin.com/in/evan-st-pierre/" },
-          { name: "Email", link: "mailto:evanlstpierre@gmail.com" }
+          { name: "LinkedIn", link: "https://www.linkedin.com/in/sara-hepperle/" },
+          { name: "Email", link: "mailto:sarahepperle@gmail.com" }
         ],
       },
       work: {
         title: "Work",
         texts: [
-          { id: 1, content: "Fusce sit amet augue nec sapien hendrerit ullamcorper. Morbi malesuada, elit ut blandit luctus, magna justo sollicitudin velit, a tristique arcu risus at nisi." },
-          { id: 2, content: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin eget lorem sit amet velit facilisis placerat in eget risus." },
-          { id: 3, content: "Etiam cursus, turpis sit amet dapibus efficitur, justo augue dictum nunc, nec rutrum metus ante non neque. Praesent tincidunt justo nec diam consectetur vulputate." }
+          { id: 1, content: "Experience supporting governance and business operations by improving processes, organizing information, and helping teams maintain consistency and compliance." },
+          { id: 2, content: "Strong background in communication and stakeholder engagement, creating clear messaging, coordinating initiatives, and building positive relationships across teams." },
+          { id: 3, content: "Strong background in communication and stakeholder engagement, creating clear messaging, coordinating initiatives, and building positive relationships across teams." }
         ],
         heading: "Work Experience",
         jobs: [
-          { name: "Vogue Magazine", title: "Freelance Writer", date: "00" },
-          { name: "The New York Star", title: "Columnist", date: "98/04" }
+          { name: "CIBC", title: "Governance Anaylist", date: "25" },
+          { name: "Hydro One", title: "Internal Comms. Intern", date: "24" },
+          { name: "City of Toronto", title: "Pool Manager", date: "22-25" }
         ],
       },
     },
@@ -52,4 +53,27 @@ db.info.updateOne(
   { upsert: true }
 );
 
-print("✅ Seeded/updated info collection.");
+// ─────────────────────────────────────────────────────────────
+// Seed users collection (for login + passwordHash)
+// ─────────────────────────────────────────────────────────────
+
+// bcrypt hash from ENV
+const adminPasswordHash = process.env.USER_PASS;
+
+db.users.updateOne(
+  { _seedKey: "admin_v1" }, // idempotent upsert key
+  {
+    $set: {
+      _seedKey: "admin_v1",
+      id: 1,                       // numeric ID for your code
+      email: "admin@sarahepperle.com",
+      role: "ADMIN",
+      passwordHash: adminPasswordHash,
+    },
+  },
+  { upsert: true }
+);
+
+print("✅ Seeded/updated info and users collections.");
+
+// print("✅ Seeded/updated info collection.");

@@ -12,7 +12,7 @@ export default function ParagraphInput({id,text, setText, locked}:{id:number; te
              value={text}
              onChange={(e) => setText(e.target.value, id)}
              rows={7}
-             className="w-full p-3 focus:outline-none libre text-xs resize-none "
+             className="w-full p-3 focus:outline-none libre text-[16px] md:text-xs resize-none "
             >   
             </textarea>
             <span className={`absolute bottom-3 right-3 libre ${(text.length > 200)? "text-[#7D0A0A]":"" }`}

@@ -9,6 +9,11 @@
   --font-aboreto: var(--font-aboreto);
   --font-libre: var(--font-libre);
 }
+@media (min-width: 640px) { /* sm breakpoint */
+  p.info-text {
+    font-size: 24px;
+  }
+}
 
 body {
   background: var(--background);
@@ -43,10 +48,9 @@ span.footer {
   font-size: 16px;
 }
 
-p.info-text{
+p.info-text {
   font-family: var(--font-libre);
   color: #F5EFE7;
-  font-size:24px;
 }
 
 span.list-text{

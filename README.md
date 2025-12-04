@@ -38,9 +38,9 @@ USER_PASS='$2b$12$XW0S3PzRoJ1SAJHeMNzHmuU5gloso4O9Cq7i9wuhs1MaMo3dZ17Om'
 
 To stop the applicaiton
 ```bash
-docker compose down 
+docker compose --profile dev down
 # To close and Delete volumes
-docker compose down -v
+docker compose --profile dev down -v
 ```
 
 

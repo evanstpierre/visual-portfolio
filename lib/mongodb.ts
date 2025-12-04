@@ -29,7 +29,6 @@ declare global {
 // mongodb://user_read:pass@mongo:27017/myapp?authSource=myappmongodb`
 const MONGO_URI = process.env.MONGO_URI
 
-
 if (!MONGO_URI) throw new Error("❌ Missing MONGODB_URI env variable");
 
 const cache: MongooseCache = global.__mongoose ?? { conn: null, promise: null };
@@ -47,10 +46,6 @@ export async function connectDB() {
   try {
     cache.conn = await cache.promise;
 
-    // ✅ Log once on successful connection
-    if (mongoose.connection.readyState === 1) {
-      console.log(`✅ MongoDB connected: ${mongoose.connection.host}/${mongoose.connection.name}`);
-    }
   } catch (err) {
     cache.promise = null; // reset so we can retry next call
     console.error("❌ MongoDB connection error:", err);

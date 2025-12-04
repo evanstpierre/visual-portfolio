@@ -1,27 +1,60 @@
-# inherit from a existing image to add the functionality
-FROM node:22-alpine
-
-# Set the working directory
+# ----------------------
+# Base (shared)
+# ----------------------
+FROM node:22-alpine AS base
 WORKDIR /app
+# don't set NODE_ENV here; each stage will override it
 
-# Copy the package.json and package-lock.json files into the image.
+# Use a .dockerignore to avoid copying node_modules/.next, etc.
+
+# ----------------------
+# Dependencies (uses npm ci for reproducible installs)
+# ----------------------
+FROM base AS deps
+# NODE_ENV doesn't really matter here; we just install deps
 COPY package*.json ./
+RUN npm ci
 
-
-# Install the dependencies.
-RUN npm install
-
-# Copy the rest of the source files into the image.
-COPY . .
-
-# Expose the port that the application listens on.
-EXPOSE 3000
-
-# Enable file watching in Docker
-ENV CHOKIDAR_USEPOLLING=true \
+# ----------------------
+# Dev image (hot reload)
+# ----------------------
+FROM deps AS dev
+ENV NODE_ENV=development \
+    CHOKIDAR_USEPOLLING=true \
     WATCHPACK_POLLING=true \
     HOSTNAME=0.0.0.0
+COPY . .
+EXPOSE 3000
+CMD ["npm", "run", "dev"]
 
+# ----------------------
+# Build (create optimized Next.js build)
+# ----------------------
+FROM deps AS build
+# ✅ For builds, we want a proper production env
+ENV NODE_ENV=production
+# If you need build-time vars, use ARG (avoid putting secrets here)
+# ARG NEXT_PUBLIC_SOMETHING
+COPY . .
+RUN npm run build
 
-# Run the application.
-CMD npm run dev
+# ----------------------
+# Production runtime (slim)
+# ----------------------
+FROM node:22-alpine AS prod
+WORKDIR /app
+ENV NODE_ENV=production \
+    HOSTNAME=0.0.0.0 \
+    PORT=3000
+
+# Only copy what runtime needs
+COPY package*.json ./
+RUN npm ci --omit=dev
+
+# Copy build output & public assets
+COPY --from=build /app/.next ./.next
+COPY --from=build /app/public ./public
+# no need to copy next.config.*, it's only used at build time
+
+EXPOSE 3000
+CMD ["npm", "run", "start"]

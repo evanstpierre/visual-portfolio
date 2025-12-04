@@ -32,22 +32,24 @@ function ensureUser(user, pwd, roles) {
   }
 }
 
-// ---------- roles (scoped to ONE collection: 'info') ----------
+// ---------- roles (scoped to collections: 'info' and 'users') ----------
 
-const infoReadWrite = [
+// Read/write on "info", read-only on "users"
+const infoAndUsersPrivileges = [
   {
     resource: { db: dbName, collection: "info" },
     actions: ["find", "insert", "update"]
   },
-
+  {
+    resource: { db: dbName, collection: "users" },
+    actions: ["find"]   // <- read from users
+  }
 ];
 
 // Create/update roles
-// upsertRole("app_info_read", infoReadOnly);
-upsertRole("app_info_rw", infoReadWrite);
+upsertRole("app_info_rw", infoAndUsersPrivileges);
 
 // ---------- users ----------
-ensureUser(readUser,  readPass,  [{ role: "app_info_rw", db: dbName }]);
-
+ensureUser(readUser, readPass, [{ role: "app_info_rw", db: dbName }]);
 
 print("🎉 Users & roles configured successfully.");
