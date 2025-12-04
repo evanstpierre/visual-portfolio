@@ -31,11 +31,11 @@ services:
 
   next-prod:
     profiles: ["prod"]
-    image: evanstpierre/sara-website:latest   # 👈 use your pushed image
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
-    #   target: prod       # 👈 use the prod stage
+    # image: evanstpierre/sara-website:latest   # 👈 use your pushed image
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: prod       # 👈 use the prod stage
     container_name: next-prod
     environment:
       HOSTNAME: "0.0.0.0"
