@@ -31,10 +31,11 @@ services:
 
   next-prod:
     profiles: ["prod"]
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: prod       # 👈 use the prod stage
+    image: evanstpierre/sara-website:latest   # 👈 use your pushed image
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    #   target: prod       # 👈 use the prod stage
     container_name: next-prod
     environment:
       HOSTNAME: "0.0.0.0"
@@ -53,7 +54,7 @@ services:
     # optional: for local testing without tunnel, you can add:
     # ports:
     #   - "3000:3000"
-    command: ["npm", "run", "start"]
+    # command: ["npm", "run", "start"]
 
 
   mongo:

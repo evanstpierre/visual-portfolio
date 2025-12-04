@@ -3,7 +3,6 @@
 # ----------------------
 FROM node:22-alpine AS base
 WORKDIR /app
-# optional but often needed for some native deps
 RUN apk add --no-cache libc6-compat
 
 # ----------------------
@@ -14,7 +13,7 @@ COPY package*.json ./
 RUN npm ci
 
 # ----------------------
-# Dev image (hot reload, LOCAL USE)
+# Dev image (LOCAL ONLY)
 # ----------------------
 FROM deps AS dev
 ENV NODE_ENV=development \
@@ -27,21 +26,20 @@ EXPOSE 3000
 CMD ["npm", "run", "dev"]
 
 # ----------------------
-# Build (create optimized Next.js standalone build)
+# Build (Next.js standalone)
 # ----------------------
 FROM base AS build
 ENV NODE_ENV=production
 
-# reuse node_modules from deps
 COPY --from=deps /app/node_modules ./node_modules
 COPY package*.json ./
 COPY . .
 
-# relies on `output: "standalone"` in next.config
+# Requires: next.config.js → { output: "standalone" }
 RUN npm run build
 
 # ----------------------
-# Production runtime (super slim)
+# Production runtime (small)
 # ----------------------
 FROM node:22-alpine AS prod
 WORKDIR /app
@@ -50,11 +48,13 @@ ENV NODE_ENV=production \
     HOSTNAME=0.0.0.0 \
     PORT=3000
 
-# Copy standalone server (includes needed node_modules)
+# Copy standalone server (self-contained Node server)
 COPY --from=build /app/.next/standalone ./
 # Copy static + public assets
 COPY --from=build /app/public ./public
 COPY --from=build /app/.next/static ./.next/static
 
 EXPOSE 3000
+
+# 🚀 Run the standalone server (NOT next start)
 CMD ["node", "server.js"]
