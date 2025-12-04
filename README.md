@@ -2,6 +2,8 @@
 
 Visualization of Work Experience, About and Contact Page with admin portal and database to enable real time updates.
 
+## Live Websites Using *visiual-portfolio*
+[sarahepperle.com](https://sarahepperle.com/)
 
 ## Getting Started
 To run the devlopment Server
@@ -63,7 +65,10 @@ Expected Results of Settings Tab.
 
 
 
-
+## TODO
+-   [ ] Add dropdown under work experience
+-   [ ] Host Resume and Profile Photo in External Storage (S3)
+-   [ ] Write Blog Post/ on lesson learned from this project
 
 
 __Built by Evan St Pierre.__
