@@ -12,80 +12,43 @@ db.info.updateOne(
   { _seedKey: "profile_v1" },
   {
     $set:{
-    "name": "Carrie Bradshaw",
-    "footer": "New York, NY",
-    "contact":{
-        "title":"Contact",
-        "address":"example@example.com",
-        "subject":"default subject here..."
-    },
-    "resume":{
-        "title":"Resume",
-        "href":"" 
-        
-    },
-    "about":{
-        "title":"About",
-      "texts": [
-  {
-    "id": 1,
-    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae augue ac arcu convallis varius. Sed at libero eu risus bibendum tincidunt. Curabitur tempus sem id finibus."
-  },
-  {
-    "id": 2,
-    "content": "Praesent cursus, odio sed faucibus vulputate, sem ipsum ultricies tellus, vel malesuada tortor libero vitae magna. Fusce accumsan, nisi nec sagittis posuere, eros metus porta nulla."
-  },
-  {
-    "id": 3,
-    "content": "Ut ac justo ut erat gravida laoreet. Nunc at magna porta, suscipit sem in, consequat purus. Integer sodales, sapien vitae blandit vehicula, ligula risus efficitur quam."
-  }
-],
-        "heading": "Contact Information",
-        "contact_list":[
-            {
-                "name":"Social Media",
-                "link":"/"
-            },
-            {
-                "name":"Email",
-                "link":"mailto:example@example.com"
-            }
-        ]
-        
-    },
-    "work":{
-        "title":"Work",
-        "texts": [
-        {
-        "id": 1,
-        "content": "Fusce sit amet augue nec sapien hendrerit ullamcorper. Morbi malesuada, elit ut blandit luctus, magna justo sollicitudin velit, a tristique arcu risus at nisi."
-        },
-        {
-        "id": 2,
-        "content": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin eget lorem sit amet velit facilisis placerat in eget risus."
-        },
-        {
-        "id": 3,
-        "content": "Etiam cursus, turpis sit amet dapibus efficitur, justo augue dictum nunc, nec rutrum metus ante non neque. Praesent tincidunt justo nec diam consectetur vulputate."
-        }
+      _seedKey: "profile_v1",
+      name: "Sara Hepperle",
+      footer: "Toronto, CA",
+      contact: {
+        title: "Contact",
+        address: "sarahepperle@gmail.com",
+        subject: "Lets Connect! From sarahepperle.com",
+      },
+      resume: { title: "Resume", href: "" },
+      about: {
+        title: "About",
+        texts: [
+          { id: 1, content: "I’m in my final term of the Bachelor of Commerce Co-op program at Toronto Metropolitan University. I’ve been active in student leadership with the TMU Women in Law Society and developed an interest in law and ethics." },
+          { id: 2, content: "In Winter 2025, I completed an exchange at Copenhagen Business School and received the International Exchange Student Scholarship. I loved traveling Europe and experiencing different cultures." },
+          { id: 3, content: "Outside school, I love exploring new neighbourhoods and finding Toronto’s best bakeries. I’m a passionate baker, I love going to the the beach with Nelson (my dog) and a matcha latte." }
         ],
-        "heading": "Work Experience",
-        "jobs":[
-            {
-                "name": "Experience 1",
-                "title": "Title 1",
-                "date": "00"
-              },
-              {
-                "name": "Experience 2",
-                "title": "Title 2",
-                "date": "98/04"
-              }
-           ]
-
-    }
-    
-},
+        heading: "Contact Information",
+        contact_list: [
+          { name: "LinkedIn", link: "https://www.linkedin.com/in/sara-hepperle/" },
+          { name: "Email", link: "mailto:sarahepperle@gmail.com" }
+        ],
+      },
+      work: {
+        title: "Work",
+        texts: [
+          { id: 1, content: "Experience supporting governance and business operations by improving processes, organizing information, and helping teams maintain consistency and compliance." },
+          { id: 2, content: "Strong background in communication and stakeholder engagement, creating clear messaging, coordinating initiatives, and building positive relationships across teams." },
+          { id: 3, content: "Strong background in communication and stakeholder engagement, creating clear messaging, coordinating initiatives, and building positive relationships across teams." }
+        ],
+        heading: "Work Experience",
+        jobs: [
+          { name: "CIBC", title: "Governance Analyst", date: "25" },
+          { name: "Hydro One", title: "Internal Comms. Intern", date: "24" },
+          { name: "City of Toronto", title: "Pool Manager", date: "22-25" }
+        ],
+      },
+    },
   },
   { upsert: true }
 );
